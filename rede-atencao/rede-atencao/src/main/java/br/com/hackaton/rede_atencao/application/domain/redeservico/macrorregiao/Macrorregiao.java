@@ -1,13 +1,13 @@
-package br.com.hackaton.rede_atencao.application.domain;
+package br.com.hackaton.rede_atencao.application.domain.redeservico.macrorregiao;
 
 public class Macrorregiao {
     private final String idMacro;
-    private final String nome;
+    private final String codigoMunicipio;
     private final String redeAtencao;
 
     public Macrorregiao(MacrorregiaoBuilder builder) {
         this.idMacro = builder.idMacro;
-        this.nome = builder.nome;
+        this.codigoMunicipio = builder.codigoMunicipio;
         this.redeAtencao = builder.redeAtencao;
     }
 
@@ -15,8 +15,8 @@ public class Macrorregiao {
         return idMacro;
     }
 
-    public String getNome() {
-        return nome;
+    public String getCDMuncipio() {
+        return codigoMunicipio;
     }
 
     public String getRedeAtencao() {
@@ -25,7 +25,7 @@ public class Macrorregiao {
 
     public static class MacrorregiaoBuilder {
         private String idMacro;
-        private String nome;
+        private String codigoMunicipio;
         private String redeAtencao;
 
         public MacrorregiaoBuilder withIdMacro (String idMacro) {
@@ -33,8 +33,8 @@ public class Macrorregiao {
             return this;
         }
 
-        public MacrorregiaoBuilder withNome (String nome) {
-            this.nome = nome;
+        public MacrorregiaoBuilder withCDMunicipio (String codigoMunicipio) {
+            this.codigoMunicipio = codigoMunicipio;
             return this;
         }
 

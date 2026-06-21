@@ -1,14 +1,14 @@
-package br.com.hackaton.rede_atencao.application.domain;
+package br.com.hackaton.rede_atencao.application.domain.redeservico.redeatencao;
 
 public class RedeAtencao {
     private final String idRede;
-    private final String nome;
-    private final String tipo;
+    private final String responsavel;
+    private final TipoServico tipo;
     private final String descricao;
 
     public RedeAtencao(RedeAtencaoBuilder redeAtencaoBuilder) {
         this.idRede = redeAtencaoBuilder.idRede;
-        this.nome = redeAtencaoBuilder.nome;
+        this.responsavel = redeAtencaoBuilder.responsavel;
         this.tipo = redeAtencaoBuilder.tipo;
         this.descricao = redeAtencaoBuilder.descricao;
     }
@@ -17,11 +17,11 @@ public class RedeAtencao {
         return idRede;
     }
 
-    public String getNome() {
-        return nome;
+    public String getResponsavel() {
+        return responsavel;
     }
 
-    public String getTipo() {
+    public TipoServico getTipo() {
         return tipo;
     }
 
@@ -31,8 +31,8 @@ public class RedeAtencao {
 
     public static class RedeAtencaoBuilder {
         private String idRede;
-        private String nome;
-        private String tipo;
+        private String responsavel;
+        private TipoServico tipo;
         private String descricao;
 
         public RedeAtencaoBuilder withIdRede (String idRede) {
@@ -40,12 +40,12 @@ public class RedeAtencao {
             return this;
         }
 
-        public RedeAtencaoBuilder withNome (String nome) {
-            this.nome = nome;
+        public RedeAtencaoBuilder withResponsavel (String responsavel) {
+            this.responsavel = responsavel;
             return this;
         }
 
-        public RedeAtencaoBuilder withTipo (String tipo) {
+        public RedeAtencaoBuilder withTipo (TipoServico tipo) {
             this.tipo = tipo;
             return this;
         }

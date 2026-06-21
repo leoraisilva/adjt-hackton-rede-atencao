@@ -1,11 +1,11 @@
-package br.com.hackaton.rede_atencao.application.domain;
+package br.com.hackaton.rede_atencao.application.domain.redeservico.macrorregiao;
 
 public class DefaultMacrorregiaoFactory implements MacrorregiaoFactory{
     @Override
-    public Macrorregiao novoMacro(String idMacro, String nome, String redeAtencao) {
+    public Macrorregiao novoMacro(String idMacro, String codigoMunicipio, String redeAtencao) {
         return new Macrorregiao.MacrorregiaoBuilder()
                 .withIdMacro(idMacro)
-                .withNome(nome)
+                .withCDMunicipio(codigoMunicipio)
                 .withRedeAtencao(redeAtencao)
                 .build();
     }

@@ -1,13 +1,13 @@
-package br.com.hackaton.rede_atencao.application.domain;
+package br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude;
 
 public class RegiaoSaude {
     private final String idRedeSaude;
-    private final String nome;
+    private final Regiao regiao;
     private final String macrorregiao;
 
     public RegiaoSaude(RedeSaudeBuilder builder) {
         this.idRedeSaude = builder.idRedeSaude;
-        this.nome = builder.nome;
+        this.regiao = builder.regiao;
         this.macrorregiao = builder.macrorregiao;
     }
 
@@ -15,8 +15,8 @@ public class RegiaoSaude {
         return idRedeSaude;
     }
 
-    public String getNome() {
-        return nome;
+    public Regiao getRegiao() {
+        return regiao;
     }
 
     public String getMacrorregiao() {
@@ -25,7 +25,7 @@ public class RegiaoSaude {
 
     public static class RedeSaudeBuilder {
         private String idRedeSaude;
-        private String nome;
+        private Regiao regiao;
         private String macrorregiao;
 
         public RedeSaudeBuilder withIdRedeSaude (String redeSaude) {
@@ -38,8 +38,8 @@ public class RegiaoSaude {
             return this;
         }
 
-        public RedeSaudeBuilder withNome (String nome) {
-            this.nome = nome;
+        public RedeSaudeBuilder withRegiao (Regiao regiao) {
+            this.regiao = regiao;
             return this;
         }
 
