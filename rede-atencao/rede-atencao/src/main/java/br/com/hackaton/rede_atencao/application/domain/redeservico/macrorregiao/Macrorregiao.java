@@ -1,9 +1,11 @@
 package br.com.hackaton.rede_atencao.application.domain.redeservico.macrorregiao;
 
+import br.com.hackaton.rede_atencao.application.domain.redeservico.redeatencao.RedeAtencao;
+
 public class Macrorregiao {
     private final String idMacro;
     private final String codigoMunicipio;
-    private final String redeAtencao;
+    private final RedeAtencao redeAtencao;
 
     public Macrorregiao(MacrorregiaoBuilder builder) {
         this.idMacro = builder.idMacro;
@@ -19,14 +21,14 @@ public class Macrorregiao {
         return codigoMunicipio;
     }
 
-    public String getRedeAtencao() {
+    public RedeAtencao getRedeAtencao() {
         return redeAtencao;
     }
 
     public static class MacrorregiaoBuilder {
         private String idMacro;
         private String codigoMunicipio;
-        private String redeAtencao;
+        private RedeAtencao redeAtencao;
 
         public MacrorregiaoBuilder withIdMacro (String idMacro) {
             this.idMacro = idMacro;
@@ -38,7 +40,7 @@ public class Macrorregiao {
             return this;
         }
 
-        public MacrorregiaoBuilder withRedeAtencao (String redeAtencao) {
+        public MacrorregiaoBuilder withRedeAtencao (RedeAtencao redeAtencao) {
             this.redeAtencao = redeAtencao;
             return this;
         }

@@ -1,0 +1,80 @@
+package br.com.hackaton.rede_atencao.application.service;
+
+import br.com.hackaton.rede_atencao.application.domain.redeservico.macrorregiao.MacrorregiaoFactory;
+import br.com.hackaton.rede_atencao.application.domain.redeservico.redeatencao.RedeAtencaoFactory;
+import br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude.RegiaoSaudeFactory;
+import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.UnidadeFactory;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.RedeAtencaoPort;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.alterarTerritorio.AlterarInput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.alterarTerritorio.AlterarOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.atualizar.AtualizarInput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.atualizar.AtualizarOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.buscar.BuscarOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.comparar.CompararInput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.comparar.CompararOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.definirTerritorio.DefinirInput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.definirTerritorio.DefinirOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.desativar.DesativarOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.integrar.IntegrarInput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.integrar.IntegrarOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.listar.ListarOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.localizarTerritorio.LocalizarOutput;
+import br.com.hackaton.rede_atencao.application.usecase.outbound.RedeAtencaoRepository;
+
+import java.util.List;
+
+public class RedeAtencaoService implements RedeAtencaoPort {
+    private final RedeAtencaoRepository repository;
+
+    public RedeAtencaoService(RedeAtencaoRepository repository) {
+        this.repository = repository;
+    }
+
+    @Override
+    public AtualizarOutput atualizar(AtualizarInput input) {
+        return AtualizarOutput.from(repository.atualizar(AtualizarInput.to(input)));
+
+    }
+
+    @Override
+    public BuscarOutput buscar(String input) {
+        return BuscarOutput.from(repository.buscar(input));
+    }
+
+    @Override
+    public CompararOutput comparar(CompararInput input) {
+        return null;
+    }
+
+    @Override
+    public DesativarOutput desativar(String idUnidade) {
+        return DesativarOutput.from(repository.desativar(idUnidade));
+    }
+
+    @Override
+    public IntegrarOutput integrar(IntegrarInput input) {
+        return IntegrarOutput.from(repository.integrar(IntegrarInput.to(input)));
+    }
+
+    @Override
+    public List<ListarOutput> listar() {
+        return repository.listar().stream()
+                .map(ListarOutput::from)
+                .toList();
+    }
+
+    @Override
+    public AlterarOutput alterar(AlterarInput input) {
+        return AlterarOutput.from(repository.alterar(AlterarInput.to(input)));
+    }
+
+    @Override
+    public DefinirOutput definir(DefinirInput input) {
+        return DefinirOutput.from(repository.definir(DefinirInput.to(input)));
+    }
+
+    @Override
+    public LocalizarOutput localizar(String idTerritorio) {
+        return LocalizarOutput.from(repository.localizar(idTerritorio));
+    }
+}

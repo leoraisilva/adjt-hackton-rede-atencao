@@ -1,11 +1,12 @@
 package br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude;
 
-public class DefaultRedeSaudeFactory implements RedeSaudeFactory{
+import br.com.hackaton.rede_atencao.application.domain.redeservico.macrorregiao.Macrorregiao;
 
+public class DefaultRedeSaudeFactory implements RegiaoSaudeFactory {
 
     @Override
-    public RegiaoSaude novoRedeSaude(String idRedeSaude, Regiao regiao, String macrorregiao) {
-        return new RegiaoSaude.RedeSaudeBuilder()
+    public RegiaoSaude novoRegiaoSaude(String idRedeSaude, Regiao regiao, Macrorregiao macrorregiao) {
+        return new RegiaoSaude.RegiaoSaudeBuilder()
                 .withIdRedeSaude(idRedeSaude)
                 .withRegiao(regiao)
                 .withMacrorregiao(macrorregiao)

@@ -1,12 +1,14 @@
 package br.com.hackaton.rede_atencao.application.domain.redeservico.unidade;
 
+import br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude.RegiaoSaude;
+
 public class Unidade {
     private final String idUnidade;
     private final String nome;
     private final String cep;
     private final String bairro;
     private final Status status;
-    private final String regiaoSaude;
+    private final RegiaoSaude regiaoSaude;
 
     public Unidade(UnidadeBuilder builder) {
         this.idUnidade = builder.idUnidade;
@@ -37,7 +39,7 @@ public class Unidade {
         return status;
     }
 
-    public String getRegiaoSaude() {
+    public RegiaoSaude getRegiaoSaude() {
         return regiaoSaude;
     }
 
@@ -47,7 +49,7 @@ public class Unidade {
         private String cep;
         private String bairro;
         private Status status;
-        private String regiaoSaude;
+        private RegiaoSaude regiaoSaude;
 
         public UnidadeBuilder withIdUnidade(String idUnidade) {
             this.idUnidade = idUnidade;
@@ -74,7 +76,7 @@ public class Unidade {
             return this;
         }
 
-        public UnidadeBuilder withRegiaoSaude(String regiaoSaude) {
+        public UnidadeBuilder withRegiaoSaude(RegiaoSaude regiaoSaude) {
             this.regiaoSaude = regiaoSaude;
             return this;
         }
