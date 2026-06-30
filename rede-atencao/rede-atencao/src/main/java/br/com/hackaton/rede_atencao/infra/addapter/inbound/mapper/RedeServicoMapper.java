@@ -8,6 +8,7 @@ import br.com.hackaton.rede_atencao.application.domain.redeservico.redeatencao.T
 import br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude.Regiao;
 import br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude.RegiaoSaude;
 import br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude.RegiaoSaudeFactory;
+import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Status;
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Unidade;
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.UnidadeFactory;
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.redeservico.MacrorregiaoEntity;
@@ -99,7 +100,7 @@ public class RedeServicoMapper implements IRedeServicoMapper {
                 entity.getNome(),
                 entity.getCep(),
                 entity.getBairro(),
-                entity.getStatus(),
+                Status.valueOf(entity.getStatus()),
                 regiaoSaudeFactory.novoRegiaoSaude(
                         entityRegiao.getIdRedeSaude(),
                         Regiao.valueOf(entityRegiao.getRegiao()),
@@ -123,7 +124,7 @@ public class RedeServicoMapper implements IRedeServicoMapper {
                 domain.getNome(),
                 domain.getCep(),
                 domain.getBairro(),
-                domain.getStatus(),
+                domain.getStatus().name(),
                 domain.getRegiaoSaude().getIdRedeSaude()
         );
     }

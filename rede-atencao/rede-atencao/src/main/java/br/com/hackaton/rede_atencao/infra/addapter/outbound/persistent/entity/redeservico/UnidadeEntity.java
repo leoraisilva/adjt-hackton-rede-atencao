@@ -11,10 +11,10 @@ public class UnidadeEntity {
     private String nome;
     private String cep;
     private String bairro;
-    private Status status;
+    private String status;
     private String regiaoSaude;
 
-    public UnidadeEntity(String idUnidade, String nome, String cep, String bairro, Status status, String regiaoSaude) {
+    public UnidadeEntity(String idUnidade, String nome, String cep, String bairro, String status, String regiaoSaude) {
         this.idUnidade = idUnidade;
         this.nome = nome;
         this.cep = cep;
@@ -57,11 +57,11 @@ public class UnidadeEntity {
         this.bairro = bairro;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
