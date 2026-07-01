@@ -30,4 +30,12 @@ public record IntegrarInput (RedeAtencao redeAtencao, Macrorregiao macrorregiao,
                 .build();
     }
 
+    public static IntegrarInput from (Unidade domain) {
+        return new IntegrarInput(
+                domain.getRegiaoSaude().getMacrorregiao().getRedeAtencao(),
+                domain.getRegiaoSaude().getMacrorregiao(),
+                domain.getRegiaoSaude(),
+                domain
+        );
+    }
 }

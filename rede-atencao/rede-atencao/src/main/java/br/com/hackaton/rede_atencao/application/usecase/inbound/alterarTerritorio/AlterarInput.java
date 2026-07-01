@@ -12,4 +12,12 @@ public record AlterarInput (String idTerritorio, String nome, Address endereco) 
                 .withEndereco(input.endereco())
                 .build();
     }
+
+    public static AlterarInput from (Territorio territorio) {
+        return new AlterarInput(
+                territorio.getIdTerritorio(),
+                territorio.getNome(),
+                territorio.getEndereco()
+        );
+    }
 }

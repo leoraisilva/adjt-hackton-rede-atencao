@@ -30,4 +30,12 @@ public record AtualizarInput (RedeAtencao redeAtencao, Macrorregiao macrorregiao
                         .build())
                 .build();
     }
+    public static AtualizarInput from (Unidade domain){
+        return new AtualizarInput(
+                domain.getRegiaoSaude().getMacrorregiao().getRedeAtencao(),
+                domain.getRegiaoSaude().getMacrorregiao(),
+                domain.getRegiaoSaude(),
+                domain
+        );
+    }
 }
