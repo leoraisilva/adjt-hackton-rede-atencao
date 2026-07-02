@@ -1,26 +1,33 @@
 package br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.redeservico;
 
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Status;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "unidade_tb")
 public class UnidadeEntity {
+    @Id
+    @Column(name = "id_unidade")
     private String idUnidade;
+    @Column(name = "nome")
     private String nome;
+    @Column(name = "cep")
     private String cep;
+    @Column(name = "bairro")
     private String bairro;
+    @Column(name = "status")
     private String status;
-    private String regiaoSaude;
+    @ManyToOne
+    @JoinColumn(name = "id_regiao_saude")
+    private RegiaoSaudeEntity idRegiaoSaude;
 
-    public UnidadeEntity(String idUnidade, String nome, String cep, String bairro, String status, String regiaoSaude) {
+    public UnidadeEntity(String idUnidade, String nome, String cep, String bairro, String status, RegiaoSaudeEntity idRegiaoSaude) {
         this.idUnidade = idUnidade;
         this.nome = nome;
         this.cep = cep;
         this.bairro = bairro;
         this.status = status;
-        this.regiaoSaude = regiaoSaude;
+        this.idRegiaoSaude = idRegiaoSaude;
     }
 
     public UnidadeEntity () {}
@@ -65,11 +72,11 @@ public class UnidadeEntity {
         this.status = status;
     }
 
-    public String getRegiaoSaude() {
-        return regiaoSaude;
+    public RegiaoSaudeEntity getRegiaoSaude() {
+        return idRegiaoSaude;
     }
 
-    public void setRegiaoSaude(String regiaoSaude) {
-        this.regiaoSaude = regiaoSaude;
+    public void setRegiaoSaude(RegiaoSaudeEntity idRegiaoSaude) {
+        this.idRegiaoSaude = idRegiaoSaude;
     }
 }

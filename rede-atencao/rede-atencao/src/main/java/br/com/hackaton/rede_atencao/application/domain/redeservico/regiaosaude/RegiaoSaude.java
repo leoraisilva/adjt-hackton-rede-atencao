@@ -3,18 +3,18 @@ package br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude;
 import br.com.hackaton.rede_atencao.application.domain.redeservico.macrorregiao.Macrorregiao;
 
 public class RegiaoSaude {
-    private final String idRedeSaude;
+    private final String idRegiaoSaude;
     private final Regiao regiao;
     private final Macrorregiao macrorregiao;
 
     public RegiaoSaude(RegiaoSaudeBuilder builder) {
-        this.idRedeSaude = builder.idRedeSaude;
+        this.idRegiaoSaude = builder.idRegiaoSaude;
         this.regiao = builder.regiao;
         this.macrorregiao = builder.macrorregiao;
     }
 
-    public String getIdRedeSaude() {
-        return idRedeSaude;
+    public String getIdRegiaoSaude() {
+        return idRegiaoSaude;
     }
 
     public Regiao getRegiao() {
@@ -26,12 +26,12 @@ public class RegiaoSaude {
     }
 
     public static class RegiaoSaudeBuilder {
-        private String idRedeSaude;
+        private String idRegiaoSaude;
         private Regiao regiao;
         private Macrorregiao macrorregiao;
 
-        public RegiaoSaudeBuilder withIdRedeSaude (String redeSaude) {
-            this.idRedeSaude = redeSaude;
+        public RegiaoSaudeBuilder withIdRegiaoSaude (String idRegiaoSaude) {
+            this.idRegiaoSaude = idRegiaoSaude;
             return this;
         }
 

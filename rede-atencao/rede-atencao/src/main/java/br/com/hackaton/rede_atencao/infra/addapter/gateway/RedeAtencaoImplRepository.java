@@ -2,7 +2,7 @@ package br.com.hackaton.rede_atencao.infra.addapter.gateway;
 
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Status;
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Unidade;
-import br.com.hackaton.rede_atencao.application.domain.territorio.territorio.Territorio;
+import br.com.hackaton.rede_atencao.application.domain.territorio.Territorio;
 import br.com.hackaton.rede_atencao.application.usecase.outbound.RedeAtencaoRepository;
 import br.com.hackaton.rede_atencao.infra.addapter.inbound.mapper.IRedeServicoMapper;
 import br.com.hackaton.rede_atencao.infra.addapter.inbound.mapper.ITerritorioMapper;
@@ -10,28 +10,24 @@ import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.re
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.redeservico.RedeAtencaoEntity;
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.redeservico.RegiaoSaudeEntity;
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.redeservico.UnidadeEntity;
-import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.territorio.AddressEntity;
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.repository.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
     private final IRedeServicoMapper redeServicoMapper;
     private final ITerritorioMapper territorioMapper;
-    private final AddressJpaRepository addressJpaRepository;
     private final MacrorregiaoJpaRepository macrorregiaoJpaRepository;
     private final RedeAtencaoJpaRepository redeAtencaoJpaRepository;
     private final UnidadeJpaRepository unidadeJpaRepository;
     private final TerritorioJpaRepository territorioJpaRepository;
     private final RegiaoSaudeJpaRepository regiaoSaudeJpaRepository;
 
-    public RedeAtencaoImplRepository(IRedeServicoMapper redeServicoMapper, ITerritorioMapper territorioMapper, AddressJpaRepository addressJpaRepository, MacrorregiaoJpaRepository macrorregiaoJpaRepository, RedeAtencaoJpaRepository redeAtencaoJpaRepository, UnidadeJpaRepository unidadeJpaRepository, TerritorioJpaRepository territorioJpaRepository, RegiaoSaudeJpaRepository regiaoSaudeJpaRepository) {
+    public RedeAtencaoImplRepository(IRedeServicoMapper redeServicoMapper, ITerritorioMapper territorioMapper, MacrorregiaoJpaRepository macrorregiaoJpaRepository, RedeAtencaoJpaRepository redeAtencaoJpaRepository, UnidadeJpaRepository unidadeJpaRepository, TerritorioJpaRepository territorioJpaRepository, RegiaoSaudeJpaRepository regiaoSaudeJpaRepository) {
         this.redeServicoMapper = redeServicoMapper;
         this.territorioMapper = territorioMapper;
-        this.addressJpaRepository = addressJpaRepository;
         this.macrorregiaoJpaRepository = macrorregiaoJpaRepository;
         this.redeAtencaoJpaRepository = redeAtencaoJpaRepository;
         this.unidadeJpaRepository = unidadeJpaRepository;
@@ -45,15 +41,15 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
         redeEntity.setResponsavel(redeServico.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getResponsavel());
         redeEntity.setDescricao(redeServico.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getDescricao());
         redeEntity.setTipo(redeServico.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getTipo().name());
-        redeEntity = redeAtencaoJpaRepository.save(redeEntity);
+        redeAtencaoJpaRepository.save(redeEntity);
 
         var macroEntity = macrorregiaoJpaRepository.findById(redeServico.getRegiaoSaude().getMacrorregiao().getIdMacro()).orElseGet(MacrorregiaoEntity::new);
         macroEntity.setCodigoMunicipio(redeServico.getRegiaoSaude().getMacrorregiao().getCDMuncipio());
-        macroEntity = macrorregiaoJpaRepository.save(macroEntity);
+        macrorregiaoJpaRepository.save(macroEntity);
 
-        var regiaoEntity = regiaoSaudeJpaRepository.findById(redeServico.getRegiaoSaude().getIdRedeSaude()).orElseGet(RegiaoSaudeEntity::new);
+        var regiaoEntity = regiaoSaudeJpaRepository.findById(redeServico.getRegiaoSaude().getIdRegiaoSaude()).orElseGet(RegiaoSaudeEntity::new);
         regiaoEntity.setRegiao(redeServico.getRegiaoSaude().getRegiao().name());
-        redeEntity = redeAtencaoJpaRepository.save(redeEntity);
+        redeAtencaoJpaRepository.save(redeEntity);
 
         var unidadeEntity = unidadeJpaRepository.findById(redeServico.getIdUnidade()).orElseGet(UnidadeEntity::new);
         unidadeEntity.setBairro(redeServico.getBairro());
@@ -62,27 +58,20 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
         unidadeEntity.setStatus(redeServico.getStatus().name());
         unidadeEntity = unidadeJpaRepository.save(unidadeEntity);
 
-        return redeServicoMapper.toUnidadeDomain(unidadeEntity, regiaoEntity, macroEntity, redeEntity);
+        return redeServicoMapper.toUnidadeDomain(unidadeEntity);
     }
 
     @Override
     public Unidade buscar(String input) {
         var unidadeEntity = unidadeJpaRepository.findById(input).orElseThrow(() -> new RuntimeException("Erro ao buscar unidade."));
-        var regiao = regiaoSaudeJpaRepository.findById(unidadeEntity.getRegiaoSaude()).orElseGet(RegiaoSaudeEntity::new);
-        var macro = macrorregiaoJpaRepository.findById(regiao.getMacrorregiao()).orElseGet(MacrorregiaoEntity::new);
-        var rede = redeAtencaoJpaRepository.findById(macro.getRedeAtencao()).orElseGet(RedeAtencaoEntity::new);
-        return redeServicoMapper.toUnidadeDomain(unidadeEntity,  regiao, macro, rede);
+        return redeServicoMapper.toUnidadeDomain(unidadeEntity);
 
     }
 
     @Override
     public Unidade comparar(Territorio territorio) {
-        var territorioEntity = territorioJpaRepository.findById(territorio.getIdTerritorio()).orElseThrow(() -> new RuntimeException("Erro ao comparar territorio."));
-        var unidadeEntity = unidadeJpaRepository.findByCep(territorioEntity.getEndereco()).orElseThrow(() -> new RuntimeException("Erro ao comparar unidade."));
-        var regiao = regiaoSaudeJpaRepository.findById(unidadeEntity.getRegiaoSaude()).orElseGet(RegiaoSaudeEntity::new);
-        var macro = macrorregiaoJpaRepository.findById(regiao.getMacrorregiao()).orElseGet(MacrorregiaoEntity::new);
-        var rede = redeAtencaoJpaRepository.findById(macro.getRedeAtencao()).orElseGet(RedeAtencaoEntity::new);
-        return redeServicoMapper.toUnidadeDomain(unidadeEntity,  regiao, macro, rede);
+        var unidadeEntity = unidadeJpaRepository.findByCep(territorio.getEndereco().getCep()).orElseThrow(() -> new RuntimeException("Erro ao comparar unidade."));
+        return redeServicoMapper.toUnidadeDomain(unidadeEntity);
     }
 
     @Override
@@ -90,58 +79,67 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
         var unidade = unidadeJpaRepository.findById(idUnidade).orElseThrow(() -> new RuntimeException("Erro ao desativar unidade."));
         unidade.setStatus(Status.INATIVO.name());
         unidade = unidadeJpaRepository.save(unidade);
-        var regiao = regiaoSaudeJpaRepository.findById(unidade.getRegiaoSaude()).orElseGet(RegiaoSaudeEntity::new);
-        var macro = macrorregiaoJpaRepository.findById(regiao.getMacrorregiao()).orElseGet(MacrorregiaoEntity::new);
-        var rede = redeAtencaoJpaRepository.findById(macro.getRedeAtencao()).orElseGet(RedeAtencaoEntity::new);
-        return redeServicoMapper.toUnidadeDomain(unidade,  regiao, macro, rede);
+        return redeServicoMapper.toUnidadeDomain(unidade);
     }
 
     @Override
     public Unidade integrar(Unidade unidade) {
-        var redeSaudeEntity = redeServicoMapper.toRedeAtencaoEntity(unidade.getRegiaoSaude().getMacrorregiao().getRedeAtencao());
-        var macrorregiaoEntity = redeServicoMapper.toMacroEntity(unidade.getRegiaoSaude().getMacrorregiao());
-        var regiaoSaudeEntity = redeServicoMapper.toRegiaoSaudeEntity(unidade.getRegiaoSaude());
-        var unidadeEntity = redeServicoMapper.toUnidadeEntity(unidade);
-        redeAtencaoJpaRepository.save(redeSaudeEntity);
-        macrorregiaoJpaRepository.save(macrorregiaoEntity);
-        regiaoSaudeJpaRepository.save(regiaoSaudeEntity);
-        unidadeJpaRepository.save(unidadeEntity);
-        return redeServicoMapper.toUnidadeDomain(unidadeEntity, regiaoSaudeEntity, macrorregiaoEntity, redeSaudeEntity);
+        var redeEntity = redeAtencaoJpaRepository.findById(unidade.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getIdRede()).orElseGet(RedeAtencaoEntity::new);
+        if (redeEntity.getIdRede() == null) {
+            redeEntity.setIdRede(unidade.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getIdRede());
+            redeEntity.setResponsavel(unidade.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getResponsavel());
+            redeEntity.setDescricao(unidade.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getDescricao());
+            redeEntity.setTipo(unidade.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getTipo().name());
+        }
+
+        redeAtencaoJpaRepository.save(redeEntity);
+
+        var macroEntity = macrorregiaoJpaRepository.findById(unidade.getRegiaoSaude().getMacrorregiao().getIdMacro()).orElseGet(MacrorregiaoEntity::new);
+        if(macroEntity.getIdMacro() == null){
+            macroEntity.setCodigoMunicipio(unidade.getIdUnidade());
+            macroEntity.setCodigoMunicipio(unidade.getRegiaoSaude().getMacrorregiao().getCDMuncipio());
+            macroEntity.setRedeAtencao(redeEntity);
+        }
+
+        macrorregiaoJpaRepository.save(macroEntity);
+
+        var regiaoEntity = regiaoSaudeJpaRepository.findById(unidade.getRegiaoSaude().getIdRegiaoSaude()).orElseGet(RegiaoSaudeEntity::new);
+        if (regiaoEntity.getIdRegiaoSaude() == null) {
+            regiaoEntity.setRegiao(unidade.getRegiaoSaude().getIdRegiaoSaude());
+            regiaoEntity.setIdRegiaoSaude(unidade.getRegiaoSaude().getIdRegiaoSaude());
+            regiaoEntity.setMacrorregiao(macroEntity);
+        }
+
+        regiaoSaudeJpaRepository.save(regiaoEntity);
+
+        return redeServicoMapper.toUnidadeDomain(unidadeJpaRepository.save(redeServicoMapper.toUnidadeEntity(unidade)));
     }
 
     @Override
     public List<Unidade> listar() {
-        List<Unidade> unidades = new ArrayList<>();
         var unidadelist = unidadeJpaRepository.findAll();
-        unidadelist.forEach(u -> {
-            var regiao = regiaoSaudeJpaRepository.findById(u.getRegiaoSaude()).orElseGet(RegiaoSaudeEntity::new);
-            var macro = macrorregiaoJpaRepository.findById(regiao.getMacrorregiao()).orElseGet(MacrorregiaoEntity::new);
-            var rede = redeAtencaoJpaRepository.findById(macro.getRedeAtencao()).orElseGet(RedeAtencaoEntity::new);
-            unidades.add(redeServicoMapper.toUnidadeDomain(u, regiao, macro, rede));
-        });
-        return unidades;
+        return unidadelist.stream()
+                .map(redeServicoMapper::toUnidadeDomain)
+                .toList();
     }
 
     @Override
     public Territorio alterar(Territorio input) {
         var territorioEntity = territorioJpaRepository.findById(input.getIdTerritorio()).orElseThrow(() -> new RuntimeException("Erro ao Buscar territorio."));
-        territorioEntity.setEndereco(input.getEndereco().getCep());
+        territorioEntity.setEndereco(territorioMapper.toAddressEntity(input.getEndereco()));
         territorioEntity.setNome(input.getNome());
-        var addressEntity = addressJpaRepository.findById(territorioEntity.getEndereco()).orElseThrow(() -> new RuntimeException("Erro ao Buscar endereco."));
-        return territorioMapper.toTerritorioEntity(territorioEntity, addressEntity);
+       return territorioMapper.toTerritorioEntity(territorioEntity);
     }
 
     @Override
     public Territorio definir(Territorio input) {
         var territorioEntity = territorioJpaRepository.save(territorioMapper.toTerritorioEntity(input));
-        var addressEntity = addressJpaRepository.findById(territorioEntity.getEndereco()).orElseGet(AddressEntity::new);
-        return territorioMapper.toTerritorioEntity(territorioEntity, addressEntity);
+        return territorioMapper.toTerritorioEntity(territorioEntity);
     }
 
     @Override
     public Territorio localizar(String idTerritorio) {
         var territorio = territorioJpaRepository.findById(idTerritorio).orElseThrow(() -> new RuntimeException("Erro ao buscar territorio."));
-        var address = addressJpaRepository.findById(territorio.getEndereco()).orElseThrow(() -> new RuntimeException("Erro ao buscar endereco."));
-        return territorioMapper.toTerritorioEntity(territorio, address);
+        return territorioMapper.toTerritorioEntity(territorio);
     }
 }

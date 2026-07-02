@@ -1,9 +1,9 @@
 package br.com.hackaton.rede_atencao.infra.addapter.inbound.mapper;
 
-import br.com.hackaton.rede_atencao.application.domain.territorio.territorio.Address;
-import br.com.hackaton.rede_atencao.application.domain.territorio.territorio.AddressFactory;
-import br.com.hackaton.rede_atencao.application.domain.territorio.territorio.Territorio;
-import br.com.hackaton.rede_atencao.application.domain.territorio.territorio.TerritorioFactory;
+import br.com.hackaton.rede_atencao.application.domain.territorio.Address;
+import br.com.hackaton.rede_atencao.application.domain.territorio.AddressFactory;
+import br.com.hackaton.rede_atencao.application.domain.territorio.Territorio;
+import br.com.hackaton.rede_atencao.application.domain.territorio.TerritorioFactory;
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.territorio.AddressEntity;
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.territorio.TerritorioEntity;
 
@@ -20,7 +20,16 @@ public class TerritorioMapper implements ITerritorioMapper {
         return new TerritorioEntity(
                 domain.getIdTerritorio(),
                 domain.getNome(),
-                domain.getEndereco().getCep()
+                new AddressEntity(
+                        domain.getEndereco().getIbge(),
+                        domain.getEndereco().getCep(),
+                        domain.getEndereco().getLogradouro(),
+                        domain.getEndereco().getComplemento(),
+                        domain.getEndereco().getBairro(),
+                        domain.getEndereco().getLocalidade(),
+                        domain.getEndereco().getEstado(),
+                        domain.getEndereco().getUF()
+                )
         );
     }
 
@@ -50,19 +59,19 @@ public class TerritorioMapper implements ITerritorioMapper {
         );
     }
 
-    public Territorio toTerritorioEntity (TerritorioEntity entity, AddressEntity entityAddress) {
+    public Territorio toTerritorioEntity (TerritorioEntity entity) {
         return territorioFactory.novoTerritorio(
                 entity.getIdTerritorio(),
                 entity.getNome(),
                 addressFactory.novoAddress(
-                        entityAddress.getIbge(),
-                        entity.getEndereco(),
-                        entityAddress.getLogradouro(),
-                        entityAddress.getComplemento(),
-                        entityAddress.getBairro(),
-                        entityAddress.getLocalidade(),
-                        entityAddress.getEstado(),
-                        entityAddress.getComplemento()
+                        entity.getEndereco().getIbge(),
+                        entity.getEndereco().getCep(),
+                        entity.getEndereco().getLogradouro(),
+                        entity.getEndereco().getComplemento(),
+                        entity.getEndereco().getBairro(),
+                        entity.getEndereco().getLocalidade(),
+                        entity.getEndereco().getEstado(),
+                        entity.getEndereco().getComplemento()
                 )
         );
     }

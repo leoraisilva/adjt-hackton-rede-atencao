@@ -1,4 +1,4 @@
-package br.com.hackaton.rede_atencao.application.usecase.inbound.alterarTerritorio;
+package br.com.hackaton.rede_atencao.application.usecase.inbound.alterar;
 
 import br.com.hackaton.rede_atencao.application.usecase.inbound.RedeAtencaoPort;
 

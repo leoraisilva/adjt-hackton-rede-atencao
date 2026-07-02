@@ -1,19 +1,19 @@
 package br.com.hackaton.rede_atencao.application.usecase.inbound;
 
-import br.com.hackaton.rede_atencao.application.usecase.inbound.alterarTerritorio.AlterarInput;
-import br.com.hackaton.rede_atencao.application.usecase.inbound.alterarTerritorio.AlterarOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.alterar.AlterarInput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.alterar.AlterarOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.atualizar.AtualizarInput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.atualizar.AtualizarOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.buscar.BuscarOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.comparar.CompararInput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.comparar.CompararOutput;
-import br.com.hackaton.rede_atencao.application.usecase.inbound.definirTerritorio.DefinirInput;
-import br.com.hackaton.rede_atencao.application.usecase.inbound.definirTerritorio.DefinirOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.definir.DefinirInput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.definir.DefinirOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.desativar.DesativarOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.integrar.IntegrarInput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.integrar.IntegrarOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.listar.ListarOutput;
-import br.com.hackaton.rede_atencao.application.usecase.inbound.localizarTerritorio.LocalizarOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.localizar.LocalizarOutput;
 
 import java.util.List;
 

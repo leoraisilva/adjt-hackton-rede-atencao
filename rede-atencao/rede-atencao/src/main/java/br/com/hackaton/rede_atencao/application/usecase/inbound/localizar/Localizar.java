@@ -1,4 +1,4 @@
-package br.com.hackaton.rede_atencao.application.usecase.inbound.localizarTerritorio;
+package br.com.hackaton.rede_atencao.application.usecase.inbound.localizar;
 
 import br.com.hackaton.rede_atencao.application.usecase.inbound.RedeAtencaoPort;
 

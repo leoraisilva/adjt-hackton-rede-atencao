@@ -1,17 +1,20 @@
 package br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.territorio;
 
-import br.com.hackaton.rede_atencao.application.domain.territorio.territorio.Address;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "territorio_tb")
 public class TerritorioEntity {
+    @Id
+    @Column(name = "id_territorio")
     private String idTerritorio;
+    @Column(name = "nome")
     private String nome;
-    private String endereco;
+    @ManyToOne
+    @JoinColumn(name = "cep")
+    private AddressEntity endereco;
 
-    public TerritorioEntity(String idTerritorio, String nome, String endereco) {
+    public TerritorioEntity(String idTerritorio, String nome, AddressEntity endereco) {
         this.idTerritorio = idTerritorio;
         this.nome = nome;
         this.endereco = endereco;
@@ -35,11 +38,11 @@ public class TerritorioEntity {
         this.nome = nome;
     }
 
-    public String getEndereco() {
+    public AddressEntity getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(AddressEntity endereco) {
         this.endereco = endereco;
     }
 }

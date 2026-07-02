@@ -1,18 +1,29 @@
 package br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.territorio;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "address_tb")
 public class AddressEntity {
-    private String ibge;
+    @Id
+    @Column(name = "cep")
     private String cep;
+    @Column(name = "ibge")
+    private String ibge;
+    @Column(name = "logradouro")
     private String logradouro;
+    @Column(name = "complemento")
     private String complemento;
+    @Column(name = "bairro")
     private String bairro;
+    @Column(name = "localidade")
     private String localidade;
+    @Column(name = "estado")
     private String estado;
+    @Column(name = "uf")
     private String uf;
 
     public AddressEntity(String ibge, String cep, String logradouro, String complemento, String bairro, String localidade, String estado, String uf) {

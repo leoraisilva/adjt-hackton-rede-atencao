@@ -7,7 +7,7 @@ import br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude.R
 public record RegiaoSaudeDTO (String idRedeSaude, Regiao regiao, MacrorregiaoDTO macrorregiao) {
     public static RegiaoSaude toDomain (RegiaoSaudeDTO regiaoSaudeDTO) {
         return new RegiaoSaude.RegiaoSaudeBuilder()
-                .withIdRedeSaude(regiaoSaudeDTO.idRedeSaude)
+                .withIdRegiaoSaude(regiaoSaudeDTO.idRedeSaude)
                 .withRegiao(regiaoSaudeDTO.regiao)
                 .withMacrorregiao(MacrorregiaoDTO.toDomain(regiaoSaudeDTO.macrorregiao))
                 .build();

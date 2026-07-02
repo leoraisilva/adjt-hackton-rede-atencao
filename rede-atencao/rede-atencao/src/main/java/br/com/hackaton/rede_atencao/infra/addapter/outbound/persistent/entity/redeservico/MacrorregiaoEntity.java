@@ -1,19 +1,23 @@
 package br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.redeservico;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "macrorregiao_tb")
 public class MacrorregiaoEntity {
+    @Id
+    @Column(name = "id_macro")
     private String idMacro;
+    @Column(name = "codigo_municipio")
     private String codigoMunicipio;
-    private String redeAtencao;
+    @ManyToOne
+    @JoinColumn(name = "id_rede")
+    private RedeAtencaoEntity idRede;
 
-    public MacrorregiaoEntity(String idMacro, String codigoMunicipio, String redeAtencao) {
+    public MacrorregiaoEntity(String idMacro, String codigoMunicipio, RedeAtencaoEntity idRede) {
         this.idMacro = idMacro;
         this.codigoMunicipio = codigoMunicipio;
-        this.redeAtencao = redeAtencao;
+        this.idRede = idRede;
     }
 
     public MacrorregiaoEntity() {}
@@ -34,11 +38,11 @@ public class MacrorregiaoEntity {
         this.codigoMunicipio = codigoMunicipio;
     }
 
-    public String getRedeAtencao() {
-        return redeAtencao;
+    public RedeAtencaoEntity getRedeAtencao() {
+        return idRede;
     }
 
-    public void setRedeAtencao(String redeAtencao) {
-        this.redeAtencao = redeAtencao;
+    public void setRedeAtencao(RedeAtencaoEntity idRede) {
+        this.idRede = idRede;
     }
 }

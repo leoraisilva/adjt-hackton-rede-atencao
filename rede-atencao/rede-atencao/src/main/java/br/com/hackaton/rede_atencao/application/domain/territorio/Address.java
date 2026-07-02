@@ -1,4 +1,4 @@
-package br.com.hackaton.rede_atencao.application.domain.territorio.territorio;
+package br.com.hackaton.rede_atencao.application.domain.territorio;
 
 public class Address {
     private final String ibge;

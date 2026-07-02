@@ -1,30 +1,34 @@
 package br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.redeservico;
 
 import br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude.Regiao;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "regiao_saude_tb")
 public class RegiaoSaudeEntity {
-    private String idRedeSaude;
+    @Id
+    @Column(name = "id_regiao_saude")
+    private String idRegiaoSaude;
+    @Column(name = "regiao")
     private String regiao;
-    private String macrorregiao;
+    @ManyToOne
+    @JoinColumn(name = "id_macro")
+    private MacrorregiaoEntity idMacro;
 
-    public RegiaoSaudeEntity(String idRedeSaude, String regiao, String macrorregiao) {
-        this.idRedeSaude = idRedeSaude;
+    public RegiaoSaudeEntity(String idRegiaoSaude, String regiao, MacrorregiaoEntity idMacro) {
+        this.idRegiaoSaude = idRegiaoSaude;
         this.regiao = regiao;
-        this.macrorregiao = macrorregiao;
+        this.idMacro = idMacro;
     }
 
     public RegiaoSaudeEntity () {}
 
-    public String getIdRedeSaude() {
-        return idRedeSaude;
+    public String getIdRegiaoSaude() {
+        return idRegiaoSaude;
     }
 
-    public void setIdRedeSaude(String idRedeSaude) {
-        this.idRedeSaude = idRedeSaude;
+    public void setIdRegiaoSaude(String idRegiaoSaude) {
+        this.idRegiaoSaude = idRegiaoSaude;
     }
 
     public String getRegiao() {
@@ -35,11 +39,11 @@ public class RegiaoSaudeEntity {
         this.regiao = regiao;
     }
 
-    public String getMacrorregiao() {
-        return macrorregiao;
+    public MacrorregiaoEntity getMacrorregiao() {
+        return idMacro;
     }
 
-    public void setMacrorregiao(String macrorregiao) {
-        this.macrorregiao = macrorregiao;
+    public void setMacrorregiao(MacrorregiaoEntity idMacro) {
+        this.idMacro = idMacro;
     }
 }

@@ -1,15 +1,22 @@
 package br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.redeservico;
 
 import br.com.hackaton.rede_atencao.application.domain.redeservico.redeatencao.TipoServico;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "rede_atencao_tb")
 public class RedeAtencaoEntity {
+    @Id
+    @Column(name = "id_rede")
     private String idRede;
+    @Column(name = "responsavel")
     private String responsavel;
+    @Column(name = "tipo")
     private String tipo;
+    @Column(name = "descricao")
     private String descricao;
 
     public RedeAtencaoEntity(String idRede, String responsavel, String tipo, String descricao) {

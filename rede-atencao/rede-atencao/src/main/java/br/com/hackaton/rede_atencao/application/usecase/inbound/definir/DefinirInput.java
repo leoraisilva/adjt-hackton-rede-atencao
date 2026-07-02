@@ -1,8 +1,7 @@
-package br.com.hackaton.rede_atencao.application.usecase.inbound.definirTerritorio;
+package br.com.hackaton.rede_atencao.application.usecase.inbound.definir;
 
-import br.com.hackaton.rede_atencao.application.domain.territorio.territorio.Address;
-import br.com.hackaton.rede_atencao.application.domain.territorio.territorio.Territorio;
-import br.com.hackaton.rede_atencao.infra.addapter.inbound.dto.TerritorioDTO;
+import br.com.hackaton.rede_atencao.application.domain.territorio.Address;
+import br.com.hackaton.rede_atencao.application.domain.territorio.Territorio;
 
 public record DefinirInput (String idTerritorio, String nome, Address endereco) {
     public static Territorio to (DefinirInput input) {

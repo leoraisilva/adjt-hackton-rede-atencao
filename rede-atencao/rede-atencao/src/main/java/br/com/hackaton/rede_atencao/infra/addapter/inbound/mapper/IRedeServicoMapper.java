@@ -12,10 +12,10 @@ import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.re
 public interface IRedeServicoMapper {
     RedeAtencao toRedeAtencaoDomain (RedeAtencaoEntity entity);
     RedeAtencaoEntity toRedeAtencaoEntity (RedeAtencao domain);
-    Macrorregiao toMacroDomain (MacrorregiaoEntity entity, RedeAtencaoEntity entityRedeAtencao);
+    Macrorregiao toMacroDomain (MacrorregiaoEntity entity);
     MacrorregiaoEntity toMacroEntity (Macrorregiao domain);
-    RegiaoSaude toRegiaoSaudeDomain (RegiaoSaudeEntity entity, MacrorregiaoEntity entityMacro, RedeAtencaoEntity entityRedeAtencao);
+    RegiaoSaude toRegiaoSaudeDomain (RegiaoSaudeEntity entity);
     RegiaoSaudeEntity toRegiaoSaudeEntity (RegiaoSaude domain);
-    Unidade toUnidadeDomain (UnidadeEntity entity, RegiaoSaudeEntity entityRegiao, MacrorregiaoEntity entityMacro, RedeAtencaoEntity entityRedeAtencao);
+    Unidade toUnidadeDomain (UnidadeEntity entity);
     UnidadeEntity toUnidadeEntity (Unidade domain);
 }

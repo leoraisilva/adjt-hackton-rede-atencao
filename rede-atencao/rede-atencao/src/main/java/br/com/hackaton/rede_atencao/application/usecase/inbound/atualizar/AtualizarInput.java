@@ -15,7 +15,7 @@ public record AtualizarInput (RedeAtencao redeAtencao, Macrorregiao macrorregiao
                 .withBairro(input.unidade.getBairro())
                 .withStatus(input.unidade.getStatus())
                 .withRegiaoSaude(new RegiaoSaude.RegiaoSaudeBuilder()
-                        .withIdRedeSaude(input.regiaoSaude.getIdRedeSaude())
+                        .withIdRegiaoSaude(input.regiaoSaude.getIdRegiaoSaude())
                         .withRegiao(input.regiaoSaude.getRegiao())
                         .withMacrorregiao(new Macrorregiao.MacrorregiaoBuilder()
                                 .withIdMacro(input.macrorregiao.getIdMacro())
