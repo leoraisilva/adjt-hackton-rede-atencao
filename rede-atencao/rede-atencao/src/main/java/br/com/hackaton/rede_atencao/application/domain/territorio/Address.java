@@ -1,8 +1,8 @@
 package br.com.hackaton.rede_atencao.application.domain.territorio;
 
 public class Address {
-    private final String ibge;
     private final String cep;
+    private final String codigoMunicipio;
     private final String logradouro;
     private final String complemento;
     private final String bairro;
@@ -11,7 +11,7 @@ public class Address {
     private final String uf;
 
     public Address(AddressBuilder addressBuilder) {
-        this.ibge = addressBuilder.ibge;
+        this.codigoMunicipio = addressBuilder.codigoMunicipio;
         this.cep = addressBuilder.cep;
         this.logradouro = addressBuilder.logradouro;
         this.complemento = addressBuilder.complemento;
@@ -21,8 +21,8 @@ public class Address {
         this.uf = addressBuilder.uf;
     }
 
-    public String getIbge() {
-        return ibge;
+    public String getCodigoMunicipio() {
+        return codigoMunicipio;
     }
 
     public String getCep() {
@@ -54,7 +54,7 @@ public class Address {
     }
 
     public static class AddressBuilder {
-        private String ibge;
+        private String codigoMunicipio;
         private String cep;
         private String logradouro;
         private String complemento;
@@ -63,8 +63,8 @@ public class Address {
         private String estado;
         private String uf;
 
-        public AddressBuilder withIBGE (String ibge) {
-            this.ibge = ibge;
+        public AddressBuilder withCodigoMunicipao (String codigoMunicipio) {
+            this.codigoMunicipio = codigoMunicipio;
             return this;
         }
 

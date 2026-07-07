@@ -11,8 +11,12 @@ public class UnidadeEntity {
     private String idUnidade;
     @Column(name = "nome")
     private String nome;
-    @Column(name = "cep")
-    private String cep;
+    @Column(name = "numero")
+    private int numero;
+    @Column(name = "complemento")
+    private String complemento;
+    @Column(name = "logradouro")
+    private String logradouro;
     @Column(name = "bairro")
     private String bairro;
     @Column(name = "status")
@@ -21,10 +25,12 @@ public class UnidadeEntity {
     @JoinColumn(name = "id_regiao_saude")
     private RegiaoSaudeEntity idRegiaoSaude;
 
-    public UnidadeEntity(String idUnidade, String nome, String cep, String bairro, String status, RegiaoSaudeEntity idRegiaoSaude) {
+    public UnidadeEntity(String idUnidade, String nome, String logradouro, String complemento, int numero, String bairro, String status, RegiaoSaudeEntity idRegiaoSaude) {
         this.idUnidade = idUnidade;
         this.nome = nome;
-        this.cep = cep;
+        this.logradouro = logradouro;
+        this.complemento = complemento;
+        this.numero = numero;
         this.bairro = bairro;
         this.status = status;
         this.idRegiaoSaude = idRegiaoSaude;
@@ -48,12 +54,28 @@ public class UnidadeEntity {
         this.nome = nome;
     }
 
-    public String getCep() {
-        return cep;
+    public int getNumero() {
+        return numero;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
     public String getBairro() {

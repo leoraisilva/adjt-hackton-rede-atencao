@@ -21,8 +21,8 @@ public class TerritorioMapper implements ITerritorioMapper {
                 domain.getIdTerritorio(),
                 domain.getNome(),
                 new AddressEntity(
-                        domain.getEndereco().getIbge(),
                         domain.getEndereco().getCep(),
+                        domain.getEndereco().getCodigoMunicipio(),
                         domain.getEndereco().getLogradouro(),
                         domain.getEndereco().getComplemento(),
                         domain.getEndereco().getBairro(),
@@ -35,8 +35,8 @@ public class TerritorioMapper implements ITerritorioMapper {
 
     public Address toAddressDomain (AddressEntity entity) {
         return addressFactory.novoAddress(
-                entity.getIbge(),
                 entity.getCep(),
+                entity.getCodigoMunicipio(),
                 entity.getLogradouro(),
                 entity.getComplemento(),
                 entity.getBairro(),
@@ -48,8 +48,8 @@ public class TerritorioMapper implements ITerritorioMapper {
 
     public AddressEntity toAddressEntity (Address domain) {
         return new AddressEntity(
-                domain.getIbge(),
                 domain.getCep(),
+                domain.getCodigoMunicipio(),
                 domain.getLogradouro(),
                 domain.getComplemento(),
                 domain.getBairro(),
@@ -64,8 +64,8 @@ public class TerritorioMapper implements ITerritorioMapper {
                 entity.getIdTerritorio(),
                 entity.getNome(),
                 addressFactory.novoAddress(
-                        entity.getEndereco().getIbge(),
                         entity.getEndereco().getCep(),
+                        entity.getEndereco().getCodigoMunicipio(),
                         entity.getEndereco().getLogradouro(),
                         entity.getEndereco().getComplemento(),
                         entity.getEndereco().getBairro(),

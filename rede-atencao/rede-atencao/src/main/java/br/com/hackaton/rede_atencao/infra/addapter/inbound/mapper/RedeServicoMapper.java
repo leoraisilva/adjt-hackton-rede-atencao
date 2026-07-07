@@ -35,7 +35,9 @@ public class RedeServicoMapper implements IRedeServicoMapper {
                 entity.getIdRede(),
                 entity.getResponsavel(),
                 TipoServico.valueOf(entity.getTipo()),
-                entity.getDescricao()
+                entity.getDescricao(),
+                entity.getEstado(),
+                entity.getUf()
         );
     }
 
@@ -44,7 +46,9 @@ public class RedeServicoMapper implements IRedeServicoMapper {
                 domain.getIdRede(),
                 domain.getResponsavel(),
                 domain.getTipo().name(),
-                domain.getDescricao()
+                domain.getDescricao(),
+                domain.getEstado(),
+                domain.getUf()
         );
     }
 
@@ -56,8 +60,11 @@ public class RedeServicoMapper implements IRedeServicoMapper {
                         entity.getRedeAtencao().getIdRede(),
                         entity.getRedeAtencao().getResponsavel(),
                         TipoServico.valueOf(entity.getRedeAtencao().getTipo()),
-                        entity.getRedeAtencao().getDescricao()
-                )
+                        entity.getRedeAtencao().getDescricao(),
+                        entity.getRedeAtencao().getEstado(),
+                        entity.getRedeAtencao().getUf()
+                ),
+                entity.getLocalidade()
         );
     }
 
@@ -65,18 +72,21 @@ public class RedeServicoMapper implements IRedeServicoMapper {
         return new MacrorregiaoEntity(
                 domain.getIdMacro(),
                 domain.getCDMuncipio(),
+                domain.getLocalidade(),
                 new RedeAtencaoEntity(
                         domain.getRedeAtencao().getIdRede(),
                         domain.getRedeAtencao().getResponsavel(),
                         domain.getRedeAtencao().getTipo().name(),
-                        domain.getRedeAtencao().getDescricao()
+                        domain.getRedeAtencao().getDescricao(),
+                        domain.getRedeAtencao().getEstado(),
+                        domain.getRedeAtencao().getUf()
                 )
         );
     }
 
     public RegiaoSaude toRegiaoSaudeDomain (RegiaoSaudeEntity entity) {
         return regiaoSaudeFactory.novoRegiaoSaude(
-                entity.getIdRedeSaude(),
+                entity.getIdRegiaoSaude(),
                 Regiao.valueOf(entity.getRegiao()),
                 macrorregiaoFactory.novoMacro(
                         entity.getMacrorregiao().getIdMacro(),
@@ -85,24 +95,30 @@ public class RedeServicoMapper implements IRedeServicoMapper {
                                 entity.getMacrorregiao().getRedeAtencao().getIdRede(),
                                 entity.getMacrorregiao().getRedeAtencao().getResponsavel(),
                                 TipoServico.valueOf(entity.getMacrorregiao().getRedeAtencao().getTipo()),
-                                entity.getMacrorregiao().getRedeAtencao().getDescricao()
-                        )
+                                entity.getMacrorregiao().getRedeAtencao().getDescricao(),
+                                entity.getMacrorregiao().getRedeAtencao().getEstado(),
+                                entity.getMacrorregiao().getRedeAtencao().getUf()
+                        ),
+                        entity.getMacrorregiao().getLocalidade()
                 )
         );
     }
 
     public RegiaoSaudeEntity toRegiaoSaudeEntity (RegiaoSaude domain) {
         return new RegiaoSaudeEntity(
-                domain.getIdRedeSaude(),
+                domain.getIdRegiaoSaude(),
                 domain.getRegiao().name(),
                 new MacrorregiaoEntity(
                         domain.getMacrorregiao().getIdMacro(),
                         domain.getMacrorregiao().getCDMuncipio(),
+                        domain.getMacrorregiao().getLocalidade(),
                         new RedeAtencaoEntity(
                                 domain.getMacrorregiao().getRedeAtencao().getIdRede(),
                                 domain.getMacrorregiao().getRedeAtencao().getResponsavel(),
                                 domain.getMacrorregiao().getRedeAtencao().getTipo().name(),
-                                domain.getMacrorregiao().getRedeAtencao().getDescricao()
+                                domain.getMacrorregiao().getRedeAtencao().getDescricao(),
+                                domain.getMacrorregiao().getRedeAtencao().getEstado(),
+                                domain.getMacrorregiao().getRedeAtencao().getUf()
                         )
                 )
         );
@@ -112,11 +128,13 @@ public class RedeServicoMapper implements IRedeServicoMapper {
         return unidadeFactory.novaUnidade(
                 entity.getIdUnidade(),
                 entity.getNome(),
-                entity.getCep(),
+                entity.getLogradouro(),
+                entity.getComplemento(),
+                entity.getNumero(),
                 entity.getBairro(),
                 Status.valueOf(entity.getStatus()),
                 regiaoSaudeFactory.novoRegiaoSaude(
-                        entity.getRegiaoSaude().getIdRedeSaude(),
+                        entity.getRegiaoSaude().getIdRegiaoSaude(),
                         Regiao.valueOf(entity.getRegiaoSaude().getRegiao()),
                         macrorregiaoFactory.novoMacro(
                                 entity.getRegiaoSaude().getMacrorregiao().getIdMacro(),
@@ -125,8 +143,11 @@ public class RedeServicoMapper implements IRedeServicoMapper {
                                         entity.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getIdRede(),
                                         entity.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getResponsavel(),
                                         TipoServico.valueOf(entity.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getTipo()),
-                                        entity.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getDescricao()
-                                )
+                                        entity.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getDescricao(),
+                                        entity.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getEstado(),
+                                        entity.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getUf()
+                                ),
+                                entity.getRegiaoSaude().getMacrorregiao().getLocalidade()
                         )
                 )
         );
@@ -136,20 +157,25 @@ public class RedeServicoMapper implements IRedeServicoMapper {
         return new UnidadeEntity(
                 domain.getIdUnidade(),
                 domain.getNome(),
-                domain.getCep(),
+                domain.getLogradouro(),
+                domain.getComplemento(),
+                domain.getNumero(),
                 domain.getBairro(),
                 domain.getStatus().name(),
                 new RegiaoSaudeEntity(
-                        domain.getRegiaoSaude().getIdRedeSaude(),
+                        domain.getRegiaoSaude().getIdRegiaoSaude(),
                         domain.getRegiaoSaude().getRegiao().name(),
                         new MacrorregiaoEntity(
                                 domain.getRegiaoSaude().getMacrorregiao().getIdMacro(),
                                 domain.getRegiaoSaude().getMacrorregiao().getCDMuncipio(),
+                                domain.getRegiaoSaude().getMacrorregiao().getLocalidade(),
                                 new RedeAtencaoEntity(
                                         domain.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getIdRede(),
                                         domain.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getResponsavel(),
                                         domain.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getTipo().name(),
-                                        domain.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getDescricao()
+                                        domain.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getDescricao(),
+                                        domain.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getEstado(),
+                                        domain.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getUf()
                                 )
                         )
                 )

@@ -11,8 +11,8 @@ public class AddressEntity {
     @Id
     @Column(name = "cep")
     private String cep;
-    @Column(name = "ibge")
-    private String ibge;
+    @Column(name = "codigo_municipio")
+    private String codigoMunicipio;
     @Column(name = "logradouro")
     private String logradouro;
     @Column(name = "complemento")
@@ -26,8 +26,8 @@ public class AddressEntity {
     @Column(name = "uf")
     private String uf;
 
-    public AddressEntity(String ibge, String cep, String logradouro, String complemento, String bairro, String localidade, String estado, String uf) {
-        this.ibge = ibge;
+    public AddressEntity(String codigoMunicipio, String cep, String logradouro, String complemento, String bairro, String localidade, String estado, String uf) {
+        this.codigoMunicipio = codigoMunicipio;
         this.cep = cep;
         this.logradouro = logradouro;
         this.complemento = complemento;
@@ -39,20 +39,20 @@ public class AddressEntity {
 
     public AddressEntity() { }
 
-    public String getIbge() {
-        return ibge;
-    }
-
-    public void setIbge(String ibge) {
-        this.ibge = ibge;
-    }
-
     public String getCep() {
         return cep;
     }
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public String getCodigoMunicipio() {
+        return codigoMunicipio;
+    }
+
+    public void setCodigoMunicipio(String codigoMunicipio) {
+        this.codigoMunicipio = codigoMunicipio;
     }
 
     public String getLogradouro() {

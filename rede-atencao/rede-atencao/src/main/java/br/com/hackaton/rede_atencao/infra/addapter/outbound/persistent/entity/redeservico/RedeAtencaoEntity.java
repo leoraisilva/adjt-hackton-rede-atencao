@@ -18,12 +18,18 @@ public class RedeAtencaoEntity {
     private String tipo;
     @Column(name = "descricao")
     private String descricao;
+    @Column(name = "uf")
+    private String uf;
+    @Column(name = "estado")
+    private String estado;
 
-    public RedeAtencaoEntity(String idRede, String responsavel, String tipo, String descricao) {
+    public RedeAtencaoEntity(String idRede, String responsavel, String tipo, String descricao,  String uf, String estado) {
         this.idRede = idRede;
         this.responsavel = responsavel;
         this.tipo = tipo;
         this.descricao = descricao;
+        this.uf = uf;
+        this.estado = estado;
     }
 
     public RedeAtencaoEntity () {}
@@ -58,5 +64,21 @@ public class RedeAtencaoEntity {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

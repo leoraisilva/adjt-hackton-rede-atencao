@@ -8,7 +8,7 @@ import java.util.List;
 public interface RedeAtencaoRepository {
     Unidade atualizar (Unidade redeServico);
     Unidade buscar (String input);
-    Unidade comparar (Territorio territorio);
+    Unidade  comparar (Territorio territorio);
     Unidade desativar (String idUnidade);
     Unidade integrar (Unidade unidade);
     List<Unidade> listar ();
@@ -16,4 +16,3 @@ public interface RedeAtencaoRepository {
     Territorio definir (Territorio input);
     Territorio localizar (String idTerritorio);
 }
-

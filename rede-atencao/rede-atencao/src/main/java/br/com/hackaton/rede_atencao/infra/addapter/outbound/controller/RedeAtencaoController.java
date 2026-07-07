@@ -25,6 +25,7 @@ import br.com.hackaton.rede_atencao.application.usecase.inbound.localizar.Locali
 import br.com.hackaton.rede_atencao.application.usecase.inbound.localizar.LocalizarOutput;
 import br.com.hackaton.rede_atencao.infra.addapter.inbound.dto.TerritorioDTO;
 import br.com.hackaton.rede_atencao.infra.addapter.inbound.dto.UnidadeDTO;
+import br.com.hackaton.rede_atencao.infra.addapter.inbound.dto.UnidadeIntegrarDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,8 +59,8 @@ public class RedeAtencaoController {
     }
 
     @PostMapping("/unidade/integrar")
-    public ResponseEntity<IntegrarOutput> integrar(@RequestBody UnidadeDTO unidade) {
-         return ResponseEntity.status(HttpStatus.CREATED).body(integrar.integrar(IntegrarInput.from(UnidadeDTO.toDomain(unidade))));
+    public ResponseEntity<IntegrarOutput> integrar(@RequestBody UnidadeIntegrarDTO unidade) {
+         return ResponseEntity.status(HttpStatus.CREATED).body(integrar.integrar(IntegrarInput.from(UnidadeIntegrarDTO.toDomain(unidade))));
     }
 
     @GetMapping("/unidade/buscar/{id}")

@@ -6,13 +6,8 @@ import br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude.R
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Unidade;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.buscar.BuscarOutput;
 
-public record AtualizarOutput(RedeAtencao redeAtencao, Macrorregiao macrorregiao, RegiaoSaude regiaoSaude, Unidade unidade) {
+public record AtualizarOutput(Unidade unidade) {
     public static AtualizarOutput from (Unidade unidade) {
-        return new AtualizarOutput(
-                unidade.getRegiaoSaude().getMacrorregiao().getRedeAtencao(),
-                unidade.getRegiaoSaude().getMacrorregiao(),
-                unidade.getRegiaoSaude(),
-                unidade
-        );
+        return new AtualizarOutput(unidade);
     }
 }

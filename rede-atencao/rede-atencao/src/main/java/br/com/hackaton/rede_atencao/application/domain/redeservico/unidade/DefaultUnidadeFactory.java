@@ -4,11 +4,13 @@ import br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude.R
 
 public class DefaultUnidadeFactory implements UnidadeFactory{
     @Override
-    public Unidade novaUnidade(String idUnidade, String nome, String cep, String bairro, Status status, RegiaoSaude regiaoSaude) {
+    public Unidade novaUnidade(String idUnidade, String nome, String logradouro, String complemento, int numero, String bairro, Status status, RegiaoSaude regiaoSaude) {
         return new Unidade.UnidadeBuilder()
                 .withIdUnidade(idUnidade)
                 .withNome(nome)
-                .withCep(cep)
+                .withLogradouro(logradouro)
+                .withComplemento(complemento)
+                .withNumero(numero)
                 .withBairro(bairro)
                 .withStatus(status)
                 .withRegiaoSaude(regiaoSaude)

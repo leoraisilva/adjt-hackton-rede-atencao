@@ -8,5 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface UnidadeJpaRepository extends JpaRepository<UnidadeEntity, String> {
-    Optional<UnidadeEntity> findByCep(String cep);
 }

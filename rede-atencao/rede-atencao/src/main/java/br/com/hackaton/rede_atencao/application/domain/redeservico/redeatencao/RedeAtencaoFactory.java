@@ -1,5 +1,5 @@
 package br.com.hackaton.rede_atencao.application.domain.redeservico.redeatencao;
 
 public interface RedeAtencaoFactory {
-    RedeAtencao novaRede(String idRede, String responsavel, TipoServico tipo, String descricao);
+    RedeAtencao novaRede(String idRede, String responsavel, TipoServico tipo, String descricao, String estado, String uf);
 }

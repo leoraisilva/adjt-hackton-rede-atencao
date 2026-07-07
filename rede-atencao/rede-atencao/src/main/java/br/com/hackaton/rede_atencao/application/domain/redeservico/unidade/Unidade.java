@@ -5,7 +5,9 @@ import br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude.R
 public class Unidade {
     private final String idUnidade;
     private final String nome;
-    private final String cep;
+    private final String logradouro;
+    private final String complemento;
+    private final int numero;
     private final String bairro;
     private final Status status;
     private final RegiaoSaude regiaoSaude;
@@ -13,7 +15,9 @@ public class Unidade {
     public Unidade(UnidadeBuilder builder) {
         this.idUnidade = builder.idUnidade;
         this.nome = builder.nome;
-        this.cep = builder.cep;
+        this.logradouro = builder.logradouro;
+        this.complemento = builder.complemento;
+        this.numero = builder.numero;
         this.bairro = builder.bairro;
         this.status = builder.status;
         this.regiaoSaude = builder.regiaoSaude;
@@ -27,8 +31,16 @@ public class Unidade {
         return nome;
     }
 
-    public String getCep() {
-        return cep;
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public int getNumero() {
+        return numero;
     }
 
     public String getBairro() {
@@ -46,7 +58,9 @@ public class Unidade {
     public static class UnidadeBuilder {
         private String idUnidade;
         private String nome;
-        private String cep;
+        private int numero;
+        private String complemento;
+        private String logradouro;
         private String bairro;
         private Status status;
         private RegiaoSaude regiaoSaude;
@@ -61,8 +75,18 @@ public class Unidade {
             return this;
         }
 
-        public UnidadeBuilder withCep(String cep) {
-            this.cep = cep;
+        public UnidadeBuilder withLogradouro(String logradouro) {
+            this.logradouro = logradouro;
+            return this;
+        }
+
+        public UnidadeBuilder withComplemento(String complemento) {
+            this.complemento = complemento;
+            return this;
+        }
+
+        public UnidadeBuilder withNumero(int numero) {
+            this.numero = numero;
             return this;
         }
 

@@ -6,36 +6,36 @@ import br.com.hackaton.rede_atencao.application.domain.redeservico.regiaosaude.R
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Unidade;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.integrar.IntegrarInput;
 
-public record AtualizarInput (RedeAtencao redeAtencao, Macrorregiao macrorregiao, RegiaoSaude regiaoSaude, Unidade unidade) {
+public record AtualizarInput (Unidade unidade) {
     public static Unidade to (AtualizarInput input){
         return new Unidade.UnidadeBuilder()
                 .withIdUnidade(input.unidade.getIdUnidade())
                 .withNome(input.unidade.getNome())
-                .withCep(input.unidade.getCep())
+                .withLogradouro(input.unidade.getLogradouro())
+                .withComplemento(input.unidade.getComplemento())
+                .withNumero(input.unidade.getNumero())
                 .withBairro(input.unidade.getBairro())
                 .withStatus(input.unidade.getStatus())
                 .withRegiaoSaude(new RegiaoSaude.RegiaoSaudeBuilder()
-                        .withIdRegiaoSaude(input.regiaoSaude.getIdRegiaoSaude())
-                        .withRegiao(input.regiaoSaude.getRegiao())
+                        .withIdRegiaoSaude(input.unidade().getRegiaoSaude().getIdRegiaoSaude())
+                        .withRegiao(input.unidade().getRegiaoSaude().getRegiao())
                         .withMacrorregiao(new Macrorregiao.MacrorregiaoBuilder()
-                                .withIdMacro(input.macrorregiao.getIdMacro())
-                                .withCDMunicipio(input.macrorregiao.getCDMuncipio())
+                                .withIdMacro(input.unidade().getRegiaoSaude().getMacrorregiao().getIdMacro())
+                                .withCDMunicipio(input.unidade().getRegiaoSaude().getMacrorregiao().getCDMuncipio())
+                                .withLocalidade(input.unidade().getRegiaoSaude().getMacrorregiao().getLocalidade())
                                 .withRedeAtencao(new RedeAtencao.RedeAtencaoBuilder()
-                                        .withIdRede(input.redeAtencao.getIdRede())
-                                        .withResponsavel(input.redeAtencao.getResponsavel())
-                                        .withDescricao(input.redeAtencao.getDescricao())
-                                        .withTipo(input.redeAtencao.getTipo())
+                                        .withIdRede(input.unidade().getRegiaoSaude().getMacrorregiao().getRedeAtencao().getIdRede())
+                                        .withResponsavel(input.unidade().getRegiaoSaude().getMacrorregiao().getRedeAtencao().getResponsavel())
+                                        .withDescricao(input.unidade().getRegiaoSaude().getMacrorregiao().getRedeAtencao().getDescricao())
+                                        .withEstado(input.unidade().getRegiaoSaude().getMacrorregiao().getRedeAtencao().getEstado())
+                                        .withUf(input.unidade().getRegiaoSaude().getMacrorregiao().getRedeAtencao().getUf())
+                                        .withTipo(input.unidade().getRegiaoSaude().getMacrorregiao().getRedeAtencao().getTipo())
                                         .build())
                                 .build())
                         .build())
                 .build();
     }
     public static AtualizarInput from (Unidade domain){
-        return new AtualizarInput(
-                domain.getRegiaoSaude().getMacrorregiao().getRedeAtencao(),
-                domain.getRegiaoSaude().getMacrorregiao(),
-                domain.getRegiaoSaude(),
-                domain
-        );
+        return new AtualizarInput(domain);
     }
 }
