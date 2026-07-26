@@ -71,7 +71,7 @@ public class RedeServicoMapper implements IRedeServicoMapper {
     public MacrorregiaoEntity toMacroEntity (Macrorregiao domain) {
         return new MacrorregiaoEntity(
                 domain.getIdMacro(),
-                domain.getCDMuncipio(),
+                domain.getCodigoMunicipio(),
                 domain.getLocalidade(),
                 new RedeAtencaoEntity(
                         domain.getRedeAtencao().getIdRede(),
@@ -110,7 +110,7 @@ public class RedeServicoMapper implements IRedeServicoMapper {
                 domain.getRegiao().name(),
                 new MacrorregiaoEntity(
                         domain.getMacrorregiao().getIdMacro(),
-                        domain.getMacrorregiao().getCDMuncipio(),
+                        domain.getMacrorregiao().getCodigoMunicipio(),
                         domain.getMacrorregiao().getLocalidade(),
                         new RedeAtencaoEntity(
                                 domain.getMacrorregiao().getRedeAtencao().getIdRede(),
@@ -167,7 +167,7 @@ public class RedeServicoMapper implements IRedeServicoMapper {
                         domain.getRegiaoSaude().getRegiao().name(),
                         new MacrorregiaoEntity(
                                 domain.getRegiaoSaude().getMacrorregiao().getIdMacro(),
-                                domain.getRegiaoSaude().getMacrorregiao().getCDMuncipio(),
+                                domain.getRegiaoSaude().getMacrorregiao().getCodigoMunicipio(),
                                 domain.getRegiaoSaude().getMacrorregiao().getLocalidade(),
                                 new RedeAtencaoEntity(
                                         domain.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getIdRede(),

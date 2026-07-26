@@ -51,7 +51,7 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
         redeAtencaoJpaRepository.save(redeEntity);
 
         var macroEntity = macrorregiaoJpaRepository.findById(redeServico.getRegiaoSaude().getMacrorregiao().getIdMacro()).orElseGet(MacrorregiaoEntity::new);
-        macroEntity.setCodigoMunicipio(redeServico.getRegiaoSaude().getMacrorregiao().getCDMuncipio());
+        macroEntity.setCodigoMunicipio(redeServico.getRegiaoSaude().getMacrorregiao().getCodigoMunicipio());
         macroEntity.setLocalidade(redeServico.getRegiaoSaude().getMacrorregiao().getLocalidade());
         macrorregiaoJpaRepository.save(macroEntity);
 
@@ -130,13 +130,13 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
             redeAtencaoJpaRepository.save(redeEntity);
         }
 
-        var macroEntity = macrorregiaoJpaRepository.findByCodigoMunicipio(unidade.getRegiaoSaude().getMacrorregiao().getCDMuncipio()).stream()
+        var macroEntity = macrorregiaoJpaRepository.findByCodigoMunicipio(unidade.getRegiaoSaude().getMacrorregiao().getCodigoMunicipio()).stream()
                         .filter(macro -> macro.getLocalidade().equals(unidade.getRegiaoSaude().getMacrorregiao().getLocalidade()))
                         .findAny()
                         .orElseGet(MacrorregiaoEntity::new);
         if(macroEntity.getIdMacro() == null) {
             macroEntity.setIdMacro(unidade.getRegiaoSaude().getMacrorregiao().getIdMacro());
-            macroEntity.setCodigoMunicipio(unidade.getRegiaoSaude().getMacrorregiao().getCDMuncipio());
+            macroEntity.setCodigoMunicipio(unidade.getRegiaoSaude().getMacrorregiao().getCodigoMunicipio());
             macroEntity.setLocalidade(unidade.getRegiaoSaude().getMacrorregiao().getLocalidade());
             macroEntity.setRedeAtencao(redeEntity);
             macrorregiaoJpaRepository.save(macroEntity);

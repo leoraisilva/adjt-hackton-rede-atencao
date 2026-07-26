@@ -21,7 +21,7 @@ public record AtualizarInput (Unidade unidade) {
                         .withRegiao(input.unidade().getRegiaoSaude().getRegiao())
                         .withMacrorregiao(new Macrorregiao.MacrorregiaoBuilder()
                                 .withIdMacro(input.unidade().getRegiaoSaude().getMacrorregiao().getIdMacro())
-                                .withCDMunicipio(input.unidade().getRegiaoSaude().getMacrorregiao().getCDMuncipio())
+                                .withCodigoMunicipio(input.unidade().getRegiaoSaude().getMacrorregiao().getCodigoMunicipio())
                                 .withLocalidade(input.unidade().getRegiaoSaude().getMacrorregiao().getLocalidade())
                                 .withRedeAtencao(new RedeAtencao.RedeAtencaoBuilder()
                                         .withIdRede(input.unidade().getRegiaoSaude().getMacrorregiao().getRedeAtencao().getIdRede())

@@ -8,7 +8,7 @@ public record MacrorregiaoIntegrarDTO (String codigoMunicipio, String localidade
     public static Macrorregiao toDomain (MacrorregiaoIntegrarDTO dto) {
         return new Macrorregiao.MacrorregiaoBuilder()
                 .withIdMacro(UUID.randomUUID().toString())
-                .withCDMunicipio(dto.codigoMunicipio())
+                .withCodigoMunicipio(dto.codigoMunicipio())
                 .withLocalidade(dto.localidade())
                 .withRedeAtencao(RedeAtencaoIntegrarDTO.toDomain(dto.redeAtencao))
                 .build();

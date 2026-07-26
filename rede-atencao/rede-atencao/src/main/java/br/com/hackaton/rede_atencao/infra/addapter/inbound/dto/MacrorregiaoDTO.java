@@ -6,7 +6,7 @@ public record MacrorregiaoDTO (String idMacro, String codigoMunicipio, String lo
     public static Macrorregiao toDomain (MacrorregiaoDTO dto) {
         return new Macrorregiao.MacrorregiaoBuilder()
                 .withIdMacro(dto.idMacro())
-                .withCDMunicipio(dto.codigoMunicipio())
+                .withCodigoMunicipio(dto.codigoMunicipio())
                 .withLocalidade(dto.localidade())
                 .withRedeAtencao(RedeAtencaoDTO.toDomain(dto.redeAtencao))
                 .build();
