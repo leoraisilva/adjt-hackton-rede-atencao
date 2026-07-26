@@ -99,7 +99,7 @@ public class RedeAtencaoController {
     }
 
     @GetMapping("/unidade/comparar")
-    public ResponseEntity<CompararOutput> comparar (@RequestBody TerritorioDTO territorioDTO) {
+    public ResponseEntity<List<CompararOutput>> comparar (@RequestBody TerritorioDTO territorioDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(comparar.comparar(CompararInput.from(TerritorioDTO.toDomain(territorioDTO))));
     }
 }

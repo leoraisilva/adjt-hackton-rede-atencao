@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "territorio_tb")
 public class TerritorioEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_territorio")
     private String idTerritorio;
     @Column(name = "nome")

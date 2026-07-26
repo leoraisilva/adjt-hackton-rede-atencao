@@ -10,6 +10,7 @@ import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.re
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.redeservico.RedeAtencaoEntity;
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.redeservico.RegiaoSaudeEntity;
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.redeservico.UnidadeEntity;
+import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.territorio.AddressEntity;
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.entity.territorio.TerritorioEntity;
 import br.com.hackaton.rede_atencao.infra.addapter.outbound.persistent.repository.*;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,9 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
     private final UnidadeJpaRepository unidadeJpaRepository;
     private final TerritorioJpaRepository territorioJpaRepository;
     private final RegiaoSaudeJpaRepository regiaoSaudeJpaRepository;
+    private final AddressJpaRepository addressJpaRepository;
 
-    public RedeAtencaoImplRepository(IRedeServicoMapper redeServicoMapper, ITerritorioMapper territorioMapper, MacrorregiaoJpaRepository macrorregiaoJpaRepository, RedeAtencaoJpaRepository redeAtencaoJpaRepository, UnidadeJpaRepository unidadeJpaRepository, TerritorioJpaRepository territorioJpaRepository, RegiaoSaudeJpaRepository regiaoSaudeJpaRepository) {
+    public RedeAtencaoImplRepository(IRedeServicoMapper redeServicoMapper, ITerritorioMapper territorioMapper, MacrorregiaoJpaRepository macrorregiaoJpaRepository, RedeAtencaoJpaRepository redeAtencaoJpaRepository, UnidadeJpaRepository unidadeJpaRepository, TerritorioJpaRepository territorioJpaRepository, RegiaoSaudeJpaRepository regiaoSaudeJpaRepository, AddressJpaRepository addressJpaRepository) {
         this.redeServicoMapper = redeServicoMapper;
         this.territorioMapper = territorioMapper;
         this.macrorregiaoJpaRepository = macrorregiaoJpaRepository;
@@ -35,6 +37,7 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
         this.unidadeJpaRepository = unidadeJpaRepository;
         this.territorioJpaRepository = territorioJpaRepository;
         this.regiaoSaudeJpaRepository = regiaoSaudeJpaRepository;
+        this.addressJpaRepository = addressJpaRepository;
     }
 
     @Override
@@ -76,12 +79,31 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
     }
 
     @Override
-    public Unidade comparar(Territorio territorio) {
-        return unidadeJpaRepository.findAll().stream()
-                .filter(u -> Objects.equals(u.getBairro(), territorio.getEndereco().getBairro()))
+    public List<Unidade> comparar(Territorio territorio) {
+        var unidades = unidadeJpaRepository.findAll();
+
+        var unidadesEntities = unidades.stream()
+                .filter(u -> u.getBairro().equals(territorio.getEndereco().getBairro()))
                 .map(redeServicoMapper::toUnidadeDomain)
-                .findAny()
-                .orElseThrow(() -> new RuntimeException("Erro ao Localizar as unidade."));
+                .toList();
+
+        if (!unidadesEntities.isEmpty()) {
+            return unidadesEntities;
+        }
+
+        unidadesEntities = unidades.stream()
+                .filter(u -> u.getRegiaoSaude().getMacrorregiao().getCodigoMunicipio().equals(territorio.getEndereco().getCodigoMunicipio()))
+                .map(redeServicoMapper::toUnidadeDomain)
+                .toList();
+
+        if (!unidadesEntities.isEmpty()) {
+            return unidadesEntities;
+        }
+
+        return unidades.stream()
+                .filter(u -> u.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getUf().equals(territorio.getEndereco().getUF()))
+                .map(redeServicoMapper::toUnidadeDomain)
+                .toList();
     }
 
     @Override
@@ -143,15 +165,36 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
     @Override
     public Territorio alterar(Territorio input) {
         var territorioEntity = territorioJpaRepository.findById(input.getIdTerritorio()).orElseThrow(() -> new RuntimeException("Erro ao Buscar territorio."));
-        territorioEntity.setEndereco(territorioMapper.toAddressEntity(input.getEndereco()));
+        var addressEntity = addressJpaRepository.findByCep(input.getEndereco().getCep()).orElseGet(AddressEntity::new);
+        addressEntity.setCep(input.getEndereco().getCep());
+        addressEntity.setCodigoMunicipio(input.getEndereco().getCodigoMunicipio());
+        addressEntity.setBairro(input.getEndereco().getBairro());
+        addressEntity.setLocalidade(input.getEndereco().getLocalidade());
+        addressEntity.setLogradouro(input.getEndereco().getLogradouro());
+        addressEntity.setEstado(input.getEndereco().getEstado());
+        addressEntity.setComplemento(input.getEndereco().getComplemento());
+        addressEntity.setUf(input.getEndereco().getUF());
+        addressEntity = addressJpaRepository.save(addressEntity);
+        territorioEntity.setEndereco(addressEntity);
         territorioEntity.setNome(input.getNome());
        return territorioMapper.toTerritorioEntity(territorioEntity);
     }
 
     @Override
     public Territorio definir(Territorio input) {
-        var territorioEntity = territorioJpaRepository.save(territorioMapper.toTerritorioEntity(input));
-        return territorioMapper.toTerritorioEntity(territorioEntity);
+        var addressEntity = addressJpaRepository.findByCep(input.getEndereco().getCep()).orElseGet(AddressEntity::new);
+        addressEntity.setCep(input.getEndereco().getCep());
+        addressEntity.setCodigoMunicipio(input.getEndereco().getCodigoMunicipio());
+        addressEntity.setBairro(input.getEndereco().getBairro());
+        addressEntity.setLocalidade(input.getEndereco().getLocalidade());
+        addressEntity.setLogradouro(input.getEndereco().getLogradouro());
+        addressEntity.setEstado(input.getEndereco().getEstado());
+        addressEntity.setComplemento(input.getEndereco().getComplemento());
+        addressEntity.setUf(input.getEndereco().getUF());
+        addressEntity = addressJpaRepository.save(addressEntity);
+        var territorioEntity = territorioMapper.toTerritorioEntity(input);
+        territorioEntity.setEndereco(addressEntity);
+        return territorioMapper.toTerritorioEntity(territorioJpaRepository.save(territorioEntity));
     }
 
     @Override

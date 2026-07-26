@@ -42,7 +42,7 @@ public class TerritorioMapper implements ITerritorioMapper {
                 entity.getBairro(),
                 entity.getLocalidade(),
                 entity.getEstado(),
-                entity.getComplemento()
+                entity.getUf()
         );
     }
 
@@ -55,7 +55,7 @@ public class TerritorioMapper implements ITerritorioMapper {
                 domain.getBairro(),
                 domain.getLocalidade(),
                 domain.getEstado(),
-                domain.getComplemento()
+                domain.getUF()
         );
     }
 
@@ -71,7 +71,7 @@ public class TerritorioMapper implements ITerritorioMapper {
                         entity.getEndereco().getBairro(),
                         entity.getEndereco().getLocalidade(),
                         entity.getEndereco().getEstado(),
-                        entity.getEndereco().getComplemento()
+                        entity.getEndereco().getUf()
                 )
         );
     }

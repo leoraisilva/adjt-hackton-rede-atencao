@@ -3,7 +3,7 @@ package br.com.hackaton.rede_atencao.infra.addapter.inbound.dto;
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Status;
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Unidade;
 
-public record UnidadeDTO (String idUnidade, String nome, String logradouro, String complemento, int numero, String bairro, Status status, RegiaoSaudeIntegrarDTO regiaoSaude) {
+public record UnidadeDTO (String idUnidade, String nome, String logradouro, String complemento, int numero, String bairro, Status status, RegiaoSaudeDTO regiaoSaude) {
     public static Unidade toDomain(UnidadeDTO unidadeDTO) {
         return new Unidade.UnidadeBuilder()
                 .withIdUnidade(unidadeDTO.idUnidade)
@@ -13,7 +13,7 @@ public record UnidadeDTO (String idUnidade, String nome, String logradouro, Stri
                 .withNumero(unidadeDTO.numero)
                 .withBairro(unidadeDTO.bairro)
                 .withStatus(unidadeDTO.status)
-                .withRegiaoSaude(RegiaoSaudeIntegrarDTO.toDomain(unidadeDTO.regiaoSaude))
+                .withRegiaoSaude(RegiaoSaudeDTO.toDomain(unidadeDTO.regiaoSaude))
                 .build();
     }
 }

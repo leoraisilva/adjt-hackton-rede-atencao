@@ -1,0 +1,315 @@
+openapi: 3.0.3
+info:
+  title: API Rede de Atenção
+  description: API responsável pelo gerenciamento de Unidades e Territórios da Rede de Atenção.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8082
+
+tags:
+  - name: Unidade
+    description: Operações relacionadas às Unidades
+  - name: Território
+    description: Operações relacionadas aos Territórios
+
+paths:
+
+  /api/v1/redeatencao/unidade/integrar:
+    post:
+      tags:
+        - Unidade
+      summary: Integrar unidade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnidadeIntegracaoRequest'
+      responses:
+        '200':
+          description: Unidade integrada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnidadeResponse'
+
+  /api/v1/redeatencao/unidade/buscar/{id}:
+    get:
+      tags:
+        - Unidade
+      summary: Buscar unidade por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Unidade encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnidadeResponse'
+
+  /api/v1/redeatencao/unidade/listar:
+    get:
+      tags:
+        - Unidade
+      summary: Listar unidades
+      responses:
+        '200':
+          description: Lista de unidades.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UnidadeResponse'
+
+  /api/v1/redeatencao/unidade/atualizar:
+    put:
+      tags:
+        - Unidade
+      summary: Atualizar unidade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnidadeResponse'
+      responses:
+        '200':
+          description: Unidade atualizada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnidadeResponse'
+
+  /api/v1/redeatencao/unidade/desativar/{id}:
+    delete:
+      tags:
+        - Unidade
+      summary: Desativar unidade
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Unidade desativada com sucesso.
+
+  /api/v1/redeatencao/unidade/comparar:
+    get:
+      tags:
+        - Unidade
+      summary: Comparar unidades
+      responses:
+        '200':
+          description: Comparação realizada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnidadeResponse'
+
+  /api/v1/redeatencao/territorio/definir:
+    post:
+      tags:
+        - Território
+      summary: Definir território
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerritorioRequest'
+      responses:
+        '200':
+          description: Território definido.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerritorioRequest'
+
+  /api/v1/redeatencao/territorio/alterar:
+    put:
+      tags:
+        - Território
+      summary: Alterar território
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerritorioRequest'
+      responses:
+        '200':
+          description: Território alterado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerritorioRequest'
+
+  /api/v1/redeatencao/territorio/localizar/{cep}:
+    get:
+      tags:
+        - Território
+      summary: Localizar território por CEP
+      parameters:
+        - name: cep
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Território encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerritorioRequest'
+
+components:
+
+  schemas:
+
+    UnidadeIntegracaoRequest:
+      type: object
+      properties:
+        nome:
+          type: string
+        logradouro:
+          type: string
+        complemento:
+          type: string
+        numero:
+          type: string
+        bairro:
+          type: string
+        status:
+          type: string
+        regiaoSaude:
+          $ref: '#/components/schemas/RegiaoSaudeIntegracao'
+
+    UnidadeResponse:
+      type: object
+      properties:
+        idUnidade:
+          type: string
+        nome:
+          type: string
+        logradouro:
+          type: string
+        complemento:
+          type: string
+        numero:
+          type: string
+        bairro:
+          type: string
+        status:
+          type: string
+        regiaoSaude:
+          $ref: '#/components/schemas/RegiaoSaude'
+
+    RegiaoSaudeIntegracao:
+      type: object
+      properties:
+        regiao:
+          type: string
+        macrorregiao:
+          $ref: '#/components/schemas/MacroRegiaoIntegracao'
+
+    RegiaoSaude:
+      type: object
+      properties:
+        idRegiaoSaude:
+          type: string
+        regiao:
+          type: string
+        macrorregiao:
+          $ref: '#/components/schemas/MacroRegiao'
+
+    MacroRegiaoIntegracao:
+      type: object
+      properties:
+        codigoMunicipio:
+          type: string
+        localidade:
+          type: string
+        redeAtencao:
+          $ref: '#/components/schemas/RedeAtencaoIntegracao'
+
+    MacroRegiao:
+      type: object
+      properties:
+        idMacro:
+          type: string
+        codigoMunicipio:
+          type: string
+        localidade:
+          type: string
+        redeAtencao:
+          $ref: '#/components/schemas/RedeAtencao'
+
+    RedeAtencaoIntegracao:
+      type: object
+      properties:
+        responsavel:
+          type: string
+        tipo:
+          type: string
+        descricao:
+          type: string
+        estado:
+          type: string
+        uf:
+          type: string
+
+    RedeAtencao:
+      type: object
+      properties:
+        idRede:
+          type: string
+        responsavel:
+          type: string
+        tipo:
+          type: string
+        descricao:
+          type: string
+        estado:
+          type: string
+        uf:
+          type: string
+
+    TerritorioRequest:
+      type: object
+      properties:
+        idTerritorio:
+          type: string
+        nome:
+          type: string
+        endereco:
+          $ref: '#/components/schemas/Endereco'
+
+    Endereco:
+      type: object
+      properties:
+        cep:
+          type: string
+        codigoMunicipio:
+          type: string
+        logradouro:
+          type: string
+        complemento:
+          type: string
+        bairro:
+          type: string
+        localidade:
+          type: string
+        estado:
+          type: string
+        uf:
+          type: string

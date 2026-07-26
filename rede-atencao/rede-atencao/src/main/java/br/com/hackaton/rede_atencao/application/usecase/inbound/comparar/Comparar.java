@@ -12,7 +12,7 @@ public class Comparar {
         this.redeAtencaoPort = redeAtencaoPort;
     }
 
-    public CompararOutput comparar(CompararInput input) {
+    public List<CompararOutput> comparar(CompararInput input) {
         return redeAtencaoPort.comparar(input);
     }
 }

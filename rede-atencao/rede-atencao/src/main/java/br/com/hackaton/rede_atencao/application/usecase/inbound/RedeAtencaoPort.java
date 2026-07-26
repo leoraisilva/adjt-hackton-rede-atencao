@@ -20,7 +20,7 @@ import java.util.List;
 public interface RedeAtencaoPort {
     AtualizarOutput atualizar (AtualizarInput input);
     BuscarOutput buscar (String input);
-    CompararOutput comparar (CompararInput input);
+    List<CompararOutput> comparar (CompararInput input);
     DesativarOutput desativar (String idUnidade);
     IntegrarOutput integrar (IntegrarInput input);
     List<ListarOutput> listar ();

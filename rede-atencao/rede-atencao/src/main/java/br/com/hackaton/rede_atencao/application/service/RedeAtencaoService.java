@@ -38,8 +38,10 @@ public class RedeAtencaoService implements RedeAtencaoPort {
     }
 
     @Override
-    public CompararOutput comparar(CompararInput input) {
-        return CompararOutput.from(repository.comparar(CompararInput.to(input)));
+    public List<CompararOutput> comparar(CompararInput input) {
+        return repository.comparar(CompararInput.to(input)).stream()
+                .map(CompararOutput::from)
+                .toList();
     }
 
     @Override

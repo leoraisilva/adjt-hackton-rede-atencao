@@ -87,8 +87,8 @@ public class RedeAtencaoConfig {
     }
 
     @Bean
-    RedeAtencaoRepository redeAtencaoRepository(IRedeServicoMapper redeServicoMapper, ITerritorioMapper territorioMapper, MacrorregiaoJpaRepository macrorregiaoJpaRepository, RedeAtencaoJpaRepository redeAtencaoJpaRepository, UnidadeJpaRepository unidadeJpaRepository, TerritorioJpaRepository territorioJpaRepository, RegiaoSaudeJpaRepository regiaoSaudeJpaRepository) {
-        return new RedeAtencaoImplRepository(redeServicoMapper, territorioMapper, macrorregiaoJpaRepository, redeAtencaoJpaRepository, unidadeJpaRepository, territorioJpaRepository, regiaoSaudeJpaRepository);
+    RedeAtencaoRepository redeAtencaoRepository(IRedeServicoMapper redeServicoMapper, ITerritorioMapper territorioMapper, MacrorregiaoJpaRepository macrorregiaoJpaRepository, RedeAtencaoJpaRepository redeAtencaoJpaRepository, UnidadeJpaRepository unidadeJpaRepository, TerritorioJpaRepository territorioJpaRepository, RegiaoSaudeJpaRepository regiaoSaudeJpaRepository, AddressJpaRepository addressJpaRepository) {
+        return new RedeAtencaoImplRepository(redeServicoMapper, territorioMapper, macrorregiaoJpaRepository, redeAtencaoJpaRepository, unidadeJpaRepository, territorioJpaRepository, regiaoSaudeJpaRepository, addressJpaRepository);
     }
 
     @Bean
