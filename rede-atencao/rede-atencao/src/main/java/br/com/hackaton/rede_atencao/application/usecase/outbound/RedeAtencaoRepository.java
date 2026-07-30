@@ -1,6 +1,7 @@
 package br.com.hackaton.rede_atencao.application.usecase.outbound;
 
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Unidade;
+import br.com.hackaton.rede_atencao.application.domain.territorio.Address;
 import br.com.hackaton.rede_atencao.application.domain.territorio.Territorio;
 
 import java.util.List;
@@ -8,11 +9,12 @@ import java.util.List;
 public interface RedeAtencaoRepository {
     Unidade atualizar (Unidade redeServico);
     Unidade buscar (String input);
-    List<Unidade>  comparar (Territorio territorio);
+    List<Unidade>  comparar (Address territorio);
     Unidade desativar (String idUnidade);
     Unidade integrar (Unidade unidade);
     List<Unidade> listar ();
     Territorio alterar (Territorio input);
     Territorio definir (Territorio input);
     Territorio localizar (String idTerritorio);
+    Address enderecar (Unidade unidade);
 }

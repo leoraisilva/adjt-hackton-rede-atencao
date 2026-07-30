@@ -10,6 +10,8 @@ import br.com.hackaton.rede_atencao.application.usecase.inbound.comparar.Compara
 import br.com.hackaton.rede_atencao.application.usecase.inbound.definir.DefinirInput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.definir.DefinirOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.desativar.DesativarOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.enderecar.EnderecarInput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.enderecar.EnderecarOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.integrar.IntegrarInput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.integrar.IntegrarOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.listar.ListarOutput;
@@ -27,4 +29,5 @@ public interface RedeAtencaoPort {
     AlterarOutput alterar (AlterarInput input);
     DefinirOutput definir (DefinirInput input);
     LocalizarOutput localizar (String idTerritorio);
+    EnderecarOutput enderecar (EnderecarInput input);
 }

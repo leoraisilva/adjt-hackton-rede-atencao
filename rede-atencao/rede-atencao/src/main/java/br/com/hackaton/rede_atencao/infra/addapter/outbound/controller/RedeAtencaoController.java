@@ -16,6 +16,9 @@ import br.com.hackaton.rede_atencao.application.usecase.inbound.definir.DefinirI
 import br.com.hackaton.rede_atencao.application.usecase.inbound.definir.DefinirOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.desativar.Desativar;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.desativar.DesativarOutput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.enderecar.Enderecar;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.enderecar.EnderecarInput;
+import br.com.hackaton.rede_atencao.application.usecase.inbound.enderecar.EnderecarOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.integrar.Integrar;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.integrar.IntegrarInput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.integrar.IntegrarOutput;
@@ -23,6 +26,7 @@ import br.com.hackaton.rede_atencao.application.usecase.inbound.listar.Listar;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.listar.ListarOutput;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.localizar.Localizar;
 import br.com.hackaton.rede_atencao.application.usecase.inbound.localizar.LocalizarOutput;
+import br.com.hackaton.rede_atencao.infra.addapter.inbound.dto.AddressDTO;
 import br.com.hackaton.rede_atencao.infra.addapter.inbound.dto.TerritorioDTO;
 import br.com.hackaton.rede_atencao.infra.addapter.inbound.dto.UnidadeDTO;
 import br.com.hackaton.rede_atencao.infra.addapter.inbound.dto.UnidadeIntegrarDTO;
@@ -45,8 +49,9 @@ public class RedeAtencaoController {
     private final Localizar localizar;
     private final Comparar comparar;
     private final Listar listar;
+    private final Enderecar enderecar;
 
-    public RedeAtencaoController(Alterar alterar, Buscar buscar, Atualizar atualizar, Definir definir, Integrar integrar, Desativar desativar, Localizar localizar, Comparar comparar, Listar listar) {
+    public RedeAtencaoController(Alterar alterar, Buscar buscar, Atualizar atualizar, Definir definir, Integrar integrar, Desativar desativar, Localizar localizar, Comparar comparar, Listar listar, Enderecar enderecar) {
         this.alterar = alterar;
         this.buscar = buscar;
         this.atualizar = atualizar;
@@ -56,6 +61,7 @@ public class RedeAtencaoController {
         this.localizar = localizar;
         this.comparar = comparar;
         this.listar = listar;
+        this.enderecar = enderecar;
     }
 
     @PostMapping("/unidade/integrar")
@@ -99,7 +105,12 @@ public class RedeAtencaoController {
     }
 
     @GetMapping("/unidade/comparar")
-    public ResponseEntity<List<CompararOutput>> comparar (@RequestBody TerritorioDTO territorioDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(comparar.comparar(CompararInput.from(TerritorioDTO.toDomain(territorioDTO))));
+    public ResponseEntity<List<CompararOutput>> comparar (@RequestBody AddressDTO addressDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(comparar.comparar(CompararInput.from(AddressDTO.toDomain(addressDTO))));
+    }
+
+    @GetMapping("/territorio/enderecar")
+    public ResponseEntity<EnderecarOutput> enderecar (@RequestBody UnidadeDTO unidadeDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(enderecar.enderecar(EnderecarInput.from(UnidadeDTO.toDomain(unidadeDTO))));
     }
 }

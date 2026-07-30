@@ -3,20 +3,21 @@ package br.com.hackaton.rede_atencao.application.usecase.inbound.comparar;
 import br.com.hackaton.rede_atencao.application.domain.territorio.Address;
 import br.com.hackaton.rede_atencao.application.domain.territorio.Territorio;
 
-public record CompararInput(String idTerritorio, String nome, Address endereco) {
-    public static Territorio to (CompararInput input) {
-        return new  Territorio.TerritorioBuilder()
-                .withIdTerritorio(input.idTerritorio)
-                .withNome(input.nome)
-                .withEndereco(input.endereco)
+public record CompararInput(Address endereco) {
+    public static Address to (CompararInput input) {
+        return new  Address.AddressBuilder()
+                .withCEP(input.endereco().getCep())
+                .withCodigoMunicipao(input.endereco().getCodigoMunicipio())
+                .withBairro(input.endereco().getBairro())
+                .withComplemento(input.endereco().getComplemento())
+                .withEstado(input.endereco().getEstado())
+                .withLocalidade(input.endereco().getLocalidade())
+                .withLogradouro(input.endereco().getLogradouro())
+                .withUF(input.endereco().getUF())
                 .build();
     }
 
-    public static CompararInput from (Territorio territorio) {
-        return new CompararInput(
-                territorio.getIdTerritorio(),
-                territorio.getNome(),
-                territorio.getEndereco()
-        );
+    public static CompararInput from (Address territorio) {
+        return new CompararInput(territorio);
     }
 }

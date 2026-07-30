@@ -2,6 +2,7 @@ package br.com.hackaton.rede_atencao.infra.addapter.gateway;
 
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Status;
 import br.com.hackaton.rede_atencao.application.domain.redeservico.unidade.Unidade;
+import br.com.hackaton.rede_atencao.application.domain.territorio.Address;
 import br.com.hackaton.rede_atencao.application.domain.territorio.Territorio;
 import br.com.hackaton.rede_atencao.application.usecase.outbound.RedeAtencaoRepository;
 import br.com.hackaton.rede_atencao.infra.addapter.inbound.mapper.IRedeServicoMapper;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
@@ -79,11 +81,11 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
     }
 
     @Override
-    public List<Unidade> comparar(Territorio territorio) {
+    public List<Unidade> comparar(Address territorio) {
         var unidades = unidadeJpaRepository.findAll();
 
         var unidadesEntities = unidades.stream()
-                .filter(u -> u.getBairro().equals(territorio.getEndereco().getBairro()))
+                .filter(u -> u.getBairro().equals(territorio.getBairro()))
                 .map(redeServicoMapper::toUnidadeDomain)
                 .toList();
 
@@ -92,7 +94,7 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
         }
 
         unidadesEntities = unidades.stream()
-                .filter(u -> u.getRegiaoSaude().getMacrorregiao().getCodigoMunicipio().equals(territorio.getEndereco().getCodigoMunicipio()))
+                .filter(u -> u.getRegiaoSaude().getMacrorregiao().getCodigoMunicipio().equals(territorio.getCodigoMunicipio()))
                 .map(redeServicoMapper::toUnidadeDomain)
                 .toList();
 
@@ -101,7 +103,7 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
         }
 
         return unidades.stream()
-                .filter(u -> u.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getUf().equals(territorio.getEndereco().getUF()))
+                .filter(u -> u.getRegiaoSaude().getMacrorregiao().getRedeAtencao().getUf().equals(territorio.getUF()))
                 .map(redeServicoMapper::toUnidadeDomain)
                 .toList();
     }
@@ -201,5 +203,13 @@ public class RedeAtencaoImplRepository implements RedeAtencaoRepository {
     public Territorio localizar(String idTerritorio) {
         var territorio = territorioJpaRepository.findById(idTerritorio).orElseThrow(() -> new RuntimeException("Erro ao buscar territorio."));
         return territorioMapper.toTerritorioEntity(territorio);
+    }
+
+    @Override
+    public Address enderecar(Unidade unidade) {
+        var addressEntity = addressJpaRepository.findByCodigoMunicipio(unidade.getRegiaoSaude().getMacrorregiao().getCodigoMunicipio()).stream()
+                .filter(c -> c.getBairro().equals(unidade.getBairro()))
+                .findAny().orElseThrow(() -> new RuntimeException("Endereco não foi encontrado."));
+        return territorioMapper.toAddressDomain(addressEntity);
     }
 }
